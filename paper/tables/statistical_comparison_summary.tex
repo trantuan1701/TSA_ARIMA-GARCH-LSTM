@@ -1,0 +1,19 @@
+\begin{table*}[!t]
+\centering
+\caption{Statistical comparison summary. Raw QLIKE differences sometimes favor advanced GARCH-family models, but Holm correction and the broad MCS prevent a decisive single-model superiority claim.}
+\label{tab:stat-tests}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{0.24\textwidth}p{0.25\textwidth}p{0.17\textwidth}p{0.24\textwidth}@{}}
+\toprule
+Comparison & Evidence & Result & Interpretation \\
+\midrule
+Original QLIKE DM vs. GARCH(1,1) & ARIMA-GARCH \(p=0.399560\); rolling baselines, raw log-target variants, and Hybrid-QLIKE are worse at 10\% or stronger & No significant ARIMA-GARCH difference & Mean dynamics add limited standalone value in the original benchmark set \\
+Original squared-error DM vs. GARCH(1,1) & No model differs from GARCH at the 10\% level & No robust MSE separation & RMSE rankings should be read descriptively \\
+Original absolute-error DM vs. GARCH(1,1) & Log-target variants beat GARCH by MAE & MAE favors smoother low forecasts & Not sufficient for volatility-risk superiority because QLIKE and risk tests show underprediction \\
+Advanced raw QLIKE DM vs. GARCH(1,1) & AdvGARCH-BestAsymmetric \(p=0.001534\); AdvGARCH-BestQLIKE \(p=0.018111\) & Observed improvements before multiplicity correction & Evidence favors advanced GARCH-family forecasts, with caveat \\
+Advanced Holm correction & No QLIKE improvement over GARCH(1,1) survives at 10\% & No Holm-significant superiority & Do not claim a statistically decisive winner \\
+Approximate MCS & Moving-block bootstrap approximation retains 68/73 models at 90\% and 95\% & Broad confidence set & Eliminates weak rolling/log-target models but retains many viable alternatives \\
+\bottomrule
+\end{tabular}
+\end{table*}

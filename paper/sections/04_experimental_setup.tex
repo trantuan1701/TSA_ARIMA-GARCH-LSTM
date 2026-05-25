@@ -1,0 +1,32 @@
+\section{Models}
+
+\subsection{Baselines}
+
+The historical mean baseline predicts the training-sample average variance. Rolling baselines use 5-, 10-, and 20-day trailing return volatility, squared to produce variance forecasts. These simple baselines are important because volatility is persistent and recent realized variation can be competitive over short horizons.
+
+\subsection{GARCH(1,1) and ARIMA-GARCH}
+
+GARCH(1,1) models conditional variance as
+\begin{align}
+r_t &= \mu+\epsilon_t,\qquad \epsilon_t=\sigma_t z_t,\\
+\sigma_t^2 &= \omega+\alpha\epsilon_{t-1}^{2}+\beta\sigma_{t-1}^{2}.
+\end{align}
+The parameters are estimated on the training split. Validation and test forecasts use fixed estimated parameters while recursively updating the volatility state with returns observed before each forecast origin.
+
+ARIMA-GARCH first models the conditional mean of returns using ARIMA and then fits GARCH(1,1) to the ARIMA residuals. The implemented ARIMA order selection considers \(p,q\in\{0,1,2,3\}\) with \(d=0\) using training AIC, selecting ARIMA(0,0,3) for the original benchmark. This design tests whether filtering mean dynamics adds volatility-forecasting value beyond direct GARCH variance modeling.
+
+\subsection{Advanced GARCH-Family Search}
+
+The advanced search evaluates direct ARCH-family and two-step ARIMA-GARCH candidates. It includes ARCH, GARCH, EGARCH, GJR-GARCH, APARCH, and FIGARCH-type specifications with Normal, Student-\(t\), skewed-\(t\), and GED innovation distributions where supported by the fitting library. Candidate selection uses validation QLIKE. Test results are reported only after a model or category has been selected on validation data.
+
+The search attempts 3,168 GARCH-family candidates. It records 2,592 successful fits and 576 failures, all classified as numerical errors such as non-finite forecasts. The best overall validation-selected GARCH-family model is AdvGARCH-BestQLIKE, an ARIMA(3,0,3)-EGARCH(1,1,2)-Normal specification. Category selections also identify the best asymmetric, heavy-tail, and symmetric variants.
+
+\subsection{Neural, Hybrid, Calibration, and Combination Models}
+
+The base LSTM uses length-20 sequences of lagged market and volatility features, including returns, squared returns, absolute returns, rolling volatility, volume, and trading value. The ARIMA-GARCH-LSTM hybrid augments these inputs with econometric variance and residual-related features. Tuned neural variants include log-target training and QLIKE-style loss training; selection is by validation QLIKE within the relevant neural group.
+
+Log-target models train on transformed variance targets and invert predictions back to the variance scale. This can stabilize training, but it can also produce low and smooth forecasts if scale is not recovered well. Calibration methods therefore include multiplicative QLIKE scaling, mean matching, nonnegative affine calibration, and isotonic calibration fitted on validation data only. Forecast combinations include equal-weight means, medians, two-model convex combinations, and stacking weights selected by validation QLIKE.
+
+\subsection{Risk Forecasts}
+
+Variance forecasts are mapped to VaR forecasts under a common Normal-quantile rule so that different variance models can be compared under a shared risk backtesting convention. The backtests report violation counts, expected violation counts, Kupiec unconditional coverage statistics, and Christoffersen independence and conditional coverage diagnostics.

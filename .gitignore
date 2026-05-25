@@ -1,0 +1,66 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual environments and local Python state
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Jupyter and editor state
+.ipynb_checkpoints/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# LaTeX build byproducts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+_minted*/
+auto/
+
+# Model checkpoints and serialized training artifacts
+outputs/models/
+checkpoints/
+checkpoint
+*.ckpt
+*.ckpt.*
+*.h5
+*.hdf5
+*.keras
+*.pkl
+
+# TensorBoard and local experiment scratch space
+logs/
+tensorboard/
+wandb/
+tmp/
+temp/
+*.tmp
+*.bak
+outputs/tmp/
+outputs/cache/

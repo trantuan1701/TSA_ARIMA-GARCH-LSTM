@@ -1,0 +1,46 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{balance}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{url}
+
+\graphicspath{{figures/}}
+\interdisplaylinepenalty=2500
+\hyphenation{ARIMA GARCH EGARCH FIGARCH APARCH LSTM HistoricalMean RollingVol}
+
+\newcommand{\best}[1]{\textbf{#1}}
+
+\begin{document}
+
+\title{Modeling and Forecasting VN-Index Volatility: A Robust Empirical Comparison of GARCH-Family, Neural, and Hybrid Approaches}
+
+\author{
+\IEEEauthorblockN{Tran Anh Tuan - 1120399 - DSEB 65B - NEU}
+\IEEEauthorblockA{Course: Time Series}
+}
+
+\maketitle
+
+\begin{abstract}
+This paper evaluates one-step-ahead daily VN-Index volatility forecasts using CafeF VNINDEX data, econometric and neural benchmarks, validation-based model selection, statistical comparison, VaR backtesting, and robustness to OHLC-based volatility proxies. The target is next-day squared percentage log return. On the original 726-observation common test window, GARCH(1,1) is the strongest original benchmark by QLIKE (1.052888), while ARIMA-GARCH is close (1.055679) and statistically indistinguishable by QLIKE Diebold-Mariano testing. A broader GARCH-family search attempts 3,168 specifications and obtains 2,592 successful fits; the validation-selected ARIMA(3,0,3)-EGARCH(1,1,2)-Normal model obtains test QLIKE 1.032548, and the best asymmetric category model obtains 1.029992. Several advanced GARCH-family models improve raw QLIKE relative to GARCH(1,1), but no improvement survives Holm correction at the 10\% level, and an approximate model confidence set retains 68 of 73 models. Neural and hybrid forecasts do not robustly dominate econometric benchmarks. Log-target neural variants reduce MAE but severely underpredict volatility spikes and tail risk; calibration improves average log-target QLIKE from 2.225569 to 1.146217, yet remains behind the best GARCH-family forecasts. OHLC proxy analysis shows proxy-sensitive rankings: AdvGARCH-BestAsymmetric has average QLIKE rank 3.29 across seven proxies, compared with 7.00 for GARCH(1,1). Overall, the evidence supports GARCH-family models, especially asymmetric or EGARCH-type specifications, as the most reliable class for daily VN-Index volatility forecasting.
+\end{abstract}
+
+\begin{IEEEkeywords}
+VN-Index, volatility forecasting, GARCH, EGARCH, LSTM, hybrid forecasting, QLIKE, VaR backtesting, range-based volatility.
+\end{IEEEkeywords}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_methodology}
+\input{sections/04_experimental_setup}
+\input{sections/05_results_and_discussion}
+\input{sections/06_conclusion}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

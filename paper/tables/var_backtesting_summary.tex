@@ -1,0 +1,19 @@
+\begin{table}[!t]
+\centering
+\caption{VaR backtesting summary. GARCH-type variance forecasts are closest to nominal at 5\%, while raw log-target forecasts substantially understate tail risk.}
+\label{tab:var-backtests}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.30\columnwidth}c r r r r@{}}
+\toprule
+Model & VaR & \(N\) & Viol. & Exp. & Kupiec \(p\) \\
+\midrule
+GARCH(1,1) & 5\% & 745 & 35 & 37.25 & 0.7025 \\
+ARIMA-GARCH & 5\% & 745 & 35 & 37.25 & 0.7025 \\
+LSTM-LogTarget & 5\% & 726 & 87 & 36.30 & \(1.54{\times}10^{-13}\) \\
+ComboStack-PoolD\_AllStable & 1\% & 726 & 10 & 7.26 & 0.3337 \\
+Hybrid-QLIKE & 1\% & 726 & 10 & 7.26 & 0.3337 \\
+LSTM-LogTarget & 1\% & 726 & 56 & 7.26 & \(3.81{\times}10^{-31}\) \\
+\bottomrule
+\end{tabular}
+\end{table}

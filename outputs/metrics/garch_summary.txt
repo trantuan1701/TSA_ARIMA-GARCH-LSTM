@@ -1,0 +1,38 @@
+GARCH(1,1) summary
+
+Fixed-parameter forecasting: parameters are estimated on the training split only. Validation and test forecasts recursively update the conditional variance with every post-training observed return needed to reach each prediction origin, without refitting.
+
+Converged: True
+mu: 0.0456318069903
+omega: 0.0374384078967
+alpha[1]: 0.125658552583
+beta[1]: 0.847605474506
+
+Fit warnings:
+None
+
+                     Constant Mean - GARCH Model Results                      
+==============================================================================
+Dep. Variable:         log_return_pct   R-squared:                       0.000
+Mean Model:             Constant Mean   Adj. R-squared:                  0.000
+Vol Model:                      GARCH   Log-Likelihood:               -3508.67
+Distribution:                  Normal   AIC:                           7025.33
+Method:            Maximum Likelihood   BIC:                           7048.58
+                                        No. Observations:                 2471
+Date:                Mon, May 25 2026   Df Residuals:                     2470
+Time:                        03:44:05   Df Model:                            1
+                                 Mean Model                                 
+============================================================================
+                 coef    std err          t      P>|t|      95.0% Conf. Int.
+----------------------------------------------------------------------------
+mu             0.0456  2.044e-02      2.232  2.562e-02 [5.561e-03,8.570e-02]
+                              Volatility Model                              
+============================================================================
+                 coef    std err          t      P>|t|      95.0% Conf. Int.
+----------------------------------------------------------------------------
+omega          0.0374  1.634e-02      2.291  2.195e-02 [5.412e-03,6.947e-02]
+alpha[1]       0.1257  2.122e-02      5.923  3.163e-09   [8.408e-02,  0.167]
+beta[1]        0.8476  3.027e-02     28.000 1.614e-172     [  0.788,  0.907]
+============================================================================
+
+Covariance estimator: robust

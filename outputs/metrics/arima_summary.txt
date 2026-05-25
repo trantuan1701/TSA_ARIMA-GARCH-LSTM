@@ -1,0 +1,40 @@
+ARIMA order selection summary
+
+Order selection grid: p in [0, 1, 2, 3], d = 0, q in [0, 1, 2, 3].
+Selection criterion: lowest training AIC among successfully fitted models.
+Validation and test data are not used for order selection.
+
+Selected order: (0, 0, 3)
+AIC: 7434.25083133
+BIC: 7463.31272236
+Converged: True
+
+Selected fit warnings:
+None
+
+                               SARIMAX Results                                
+==============================================================================
+Dep. Variable:         log_return_pct   No. Observations:                 2471
+Model:                 ARIMA(0, 0, 3)   Log Likelihood               -3712.125
+Date:                Mon, 25 May 2026   AIC                           7434.251
+Time:                        03:44:12   BIC                           7463.313
+Sample:                             0   HQIC                          7444.808
+                               - 2471                                         
+Covariance Type:                  opg                                         
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.0282      0.027      1.031      0.303      -0.025       0.082
+ma.L1          0.0857      0.014      5.956      0.000       0.057       0.114
+ma.L2          0.0703      0.014      5.021      0.000       0.043       0.098
+ma.L3          0.0448      0.016      2.842      0.004       0.014       0.076
+sigma2         1.1813      0.024     49.199      0.000       1.134       1.228
+===================================================================================
+Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):               548.82
+Prob(Q):                              0.99   Prob(JB):                         0.00
+Heteroskedasticity (H):               0.56   Skew:                            -0.42
+Prob(H) (two-sided):                  0.00   Kurtosis:                         5.15
+===================================================================================
+
+Warnings:
+[1] Covariance matrix calculated using the outer product of gradients (complex-step).

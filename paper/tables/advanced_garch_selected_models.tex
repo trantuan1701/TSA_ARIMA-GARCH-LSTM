@@ -1,0 +1,17 @@
+\begin{table*}[!t]
+\centering
+\caption{Validation-selected advanced GARCH-family specifications. Test QLIKE values use the full advanced test window reported in the selected-model tables; statistical tests later align losses on their common window.}
+\label{tab:advanced-garch}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.18\textwidth}p{0.20\textwidth}p{0.16\textwidth}r r p{0.20\textwidth}@{}}
+\toprule
+Model & Specification & Selection role & Val. QLIKE & Test QLIKE & Paper use \\
+\midrule
+AdvGARCH-BestQLIKE & ARIMA(3,0,3)-EGARCH(1,1,2)-Normal & Overall validation QLIKE & \best{1.611304} & 1.032548 & Primary advanced GARCH-family selected model \\
+AdvGARCH-BestAsymmetric & Zero-mean EGARCH(1,1,1)-Normal & Best asymmetric validation QLIKE & 1.612272 & \best{1.029992} & Category-selected model; best standalone test QLIKE is exploratory \\
+AdvGARCH-BestHeavyTail & ARIMA(3,0,3)-EGARCH(1,1,1)-GED & Best heavy-tail validation QLIKE & 1.611777 & 1.031536 & Category-selected heavy-tail comparison \\
+AdvGARCH-BestSymmetric & Constant-mean GARCH(1,3)-Normal & Best symmetric validation QLIKE & 1.628556 & 1.063460 & Symmetric robustness comparison \\
+\bottomrule
+\end{tabular}
+\end{table*}

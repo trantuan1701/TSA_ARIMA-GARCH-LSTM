@@ -1,0 +1,19 @@
+\section{Introduction}
+
+Volatility forecasting is risk forecasting, not price forecasting. For an equity index, a one-step variance forecast summarizes the expected magnitude of tomorrow's return shock and therefore supports margin setting, risk limits, Value-at-Risk (VaR), and portfolio allocation. The VN-Index is a natural empirical setting because daily returns exhibit volatility clustering and occasional large moves, while the true latent conditional variance is unobserved.
+
+This study evaluates one-step-ahead daily VN-Index volatility forecasts using daily CafeF VNINDEX observations. The forecasting target is the next-trading-day squared percentage log return. The comparison spans historical and rolling variance baselines, GARCH(1,1), ARIMA-GARCH, LSTM, ARIMA-GARCH-LSTM, tuned neural variants, a broad GARCH-family search, refit protocols, validation-calibrated neural forecasts, forecast combinations, VaR backtests, and robustness checks based on OHLC range estimators.
+
+The paper is not framed as a contest between deep learning and GARCH. A more useful framing is benchmark reliability under a disciplined empirical protocol. Strong classical baselines matter because volatility targets are noisy, and flexible models can appear attractive under one loss while failing under another. This is especially important when mean absolute error (MAE) rewards smooth low forecasts on calm days but does not penalize volatility-spike underprediction as directly as QLIKE.
+
+The main findings are cautious. GARCH(1,1) is a strong original benchmark on the common test window. Broader validation-based GARCH-family selection and OHLC proxy robustness favor asymmetric or EGARCH-type specifications, but formal statistical superiority over GARCH(1,1) should not be overstated after multiple-testing adjustment. Neural and hybrid forecasts can contain complementary information, especially after calibration, yet they do not robustly dominate GARCH-family forecasts.
+
+The contributions are as follows:
+\begin{enumerate}
+\item A reproducible VN-Index volatility forecasting benchmark using daily CafeF data and a one-step-ahead squared-return variance target.
+\item A broad empirical comparison of simple baselines, GARCH-family models, LSTM, ARIMA-GARCH-LSTM, calibrated neural forecasts, refit protocols, and forecast combinations.
+\item Statistical forecast comparison using Diebold-Mariano tests, Holm multiple-testing correction, and an approximate model confidence set.
+\item Risk evaluation through VaR backtesting at 5\% and 1\% tail levels.
+\item Robustness analysis using Parkinson, Garman-Klass, Rogers-Satchell, and Yang-Zhang OHLC volatility proxies.
+\item Evidence that GARCH-family models are the most reliable class in this setting, with advanced asymmetric specifications more robust than the simple GARCH(1,1), while neural and hybrid models do not consistently dominate.
+\end{enumerate}

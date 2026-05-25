@@ -1,0 +1,23 @@
+\section{Discussion}
+
+The results are consistent with the structure of daily equity-index volatility. GARCH-family models directly encode volatility persistence, and the fitted persistence values near 0.97 indicate that this structure is empirically important for the VN-Index. ARIMA mean filtering adds little because the conditional mean of daily returns is small relative to the variance process, so the residual-volatility forecast is close to direct GARCH.
+
+Asymmetric and EGARCH-type variants are favored by the advanced search and by range-based proxy robustness. This is plausible for equity-index returns because negative and positive shocks can have different implications for subsequent risk, and EGARCH specifications can represent asymmetric variance responses without the same positivity constraints as standard GARCH. The evidence is strongest as a robustness pattern rather than as a Holm-corrected declaration of one superior model.
+
+The neural results illustrate a metric trade-off. LSTM and hybrid models are not dismissed: calibrated neural forecasts and pairwise combinations show that nonlinear or hybrid signals can contain information. The issue is reliability under volatility-specific evaluation. Log-target variants can reduce MAE by producing low smooth forecasts, but QLIKE, underprediction analysis, and VaR backtests show that this behavior can miss spikes and understate risk. Calibration reduces scale bias, yet it does not fully solve timing and shape errors.
+
+Volatility proxy choice matters. Squared daily return, Parkinson, Garman-Klass, Rogers-Satchell, and Yang-Zhang proxies do not measure identical objects. The ranking changes under smoother range-based proxies, while class-level conclusions remain broadly stable: GARCH-family forecasts are strongest, asymmetric variants are most robust, and pure neural or hybrid models do not consistently dominate.
+
+\section{Limitations}
+
+Several limitations qualify the findings. The study uses daily data only; high-frequency realized volatility is not available. Squared returns and OHLC range estimators are proxies for latent volatility rather than true volatility. The advanced GARCH-family search is broad enough to create validation-overfitting risk, and 576 candidate fits fail numerically. The MCS is a documented moving-block bootstrap approximation and retains many models, so it should be read as conservative evidence against a decisive winner.
+
+The neural models are trained on a modest daily sample for deep learning. Test results cover 2023--2025 and may reflect regime-specific market conditions. Forecast combinations and ex-post best test models are useful diagnostics, but they should not be interpreted as primary selected winners. Finally, all VaR forecasts use a common Normal-quantile mapping, which standardizes comparison but does not exploit distribution-specific tail parameters from fitted GARCH-family models.
+
+\section{Conclusion}
+
+This paper provides a robust empirical benchmark for one-step-ahead VN-Index volatility forecasting under validation-based selection, statistical testing, risk backtesting, and volatility-proxy robustness. The main conclusion is that GARCH-family models remain the most reliable class for daily VN-Index volatility forecasting. GARCH(1,1) is a competitive and well-calibrated benchmark, while broader GARCH-family search and OHLC proxy analysis favor asymmetric or EGARCH-type specifications.
+
+ARIMA mean dynamics add limited standalone value. Neural and hybrid models do not robustly dominate econometric benchmarks, although calibrated neural forecasts and selected combinations suggest that hybrid information can be complementary. Log-target neural variants can reduce MAE, but they systematically underpredict volatility spikes and substantially understate tail risk before calibration. The evidence also shows that volatility proxy choice matters: directional conclusions are stable, but exact rankings are not invariant across squared-return and range-based targets.
+
+For applied VN-Index risk forecasting, the practical implication is conservative. Use GARCH-family forecasts as the benchmark class, treat advanced asymmetric specifications as robust candidates, evaluate neural and hybrid forecasts with volatility-specific losses rather than MAE alone, and validate conclusions under alternative volatility proxies and risk backtests before using them for risk management.

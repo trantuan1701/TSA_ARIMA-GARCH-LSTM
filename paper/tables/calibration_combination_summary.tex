@@ -1,0 +1,18 @@
+\begin{table*}[!t]
+\centering
+\caption{Calibration and forecast-combination summary. Calibration corrects much of the log-target scale bias, while validation-selected combinations do not establish robust hybrid superiority.}
+\label{tab:calibration-combinations}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{0.22\textwidth}p{0.22\textwidth}r r p{0.32\textwidth}@{}}
+\toprule
+Result block & Selected or diagnostic item & QLIKE & Pred./actual & Interpretation \\
+\midrule
+Raw log-target neural mean & Raw log-target group & 2.225569 & 0.273 & Low MAE comes with severe scale underprediction \\
+Calibrated log-target best & Best validation-calibrated log-target summary & 1.146217 & 1.496 & Calibration materially improves QLIKE but remains above best GARCH-family QLIKE \\
+Best validation combination & ComboStack-PoolD\_AllStable & 1.113530 & 1.398 & Primary combination result; weights mostly calibrated log-target isotonic models \\
+Best observed test combination & BestGARCHFamily + HybridQLIKE pair & \best{1.026265} & 1.098 & Exploratory test-best result; weights 0.73 on AdvGARCH-BestARIMA and 0.27 on Hybrid-QLIKE \\
+Best validation-selected GARCH-family & AdvGARCH-BestQLIKE & 1.032548 & 0.936 & Main advanced GARCH-family selected benchmark \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -1,0 +1,9 @@
+Phase,Issue_ID,Status,Section_Path,Source_Policy,Target_Citations,Verified_Citations,Notes
+Research,R1,DONE,,Repository artifacts only plus verified foundational citations,8,8,Inspected README docs src data outputs predictions metrics figures tables and paper/report_materials.md
+Writing,W1,DONE,sections/01_introduction.tex,Repository metrics and verified citations,2,2,Introduces objective and main findings without overclaiming
+Writing,W2,DONE,sections/02_related_work.tex,Verified method and evaluation citations,8,8,Covers ARIMA ARCH GARCH LSTM realized volatility and QLIKE
+Writing,W3,DONE,sections/03_methodology.tex,Repository code and metrics definitions,4,4,Defines target models features and metrics
+Writing,W4,DONE,sections/04_experimental_setup.tex,Repository data summaries and training summaries,0,0,Uses actual split counts and implementation evidence
+Writing,W5,DONE,sections/05_results_and_discussion.tex,Repository metrics figures and tables,0,0,Uses common-window test metrics and tuned selection summary
+Writing,W6,DONE,sections/06_conclusion.tex,Repository findings only,0,0,Summarizes limitations and future work
+QA,Q1,DONE,,Compilation,0,0,Compiled with tectonic because latexmk pdflatex and bibtex were unavailable; no overfull hbox or undefined-reference warnings remain

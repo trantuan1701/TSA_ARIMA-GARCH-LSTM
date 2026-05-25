@@ -1,0 +1,37 @@
+ARIMA-GARCH summary
+
+ARIMA-GARCH implementation:
+1. Fit ARIMA(p,0,q) on training log returns, with p and q selected by training AIC.
+2. Fit GARCH(1,1) on training ARIMA residuals only.
+3. Generate validation/test variance forecasts with fixed ARIMA and GARCH parameters. Every post-training observed return needed to reach each prediction origin updates the recursive state; parameters are not refit.
+
+Selected ARIMA order: (0, 0, 3)
+ARIMA one-step mean method: statsmodels ARIMAResults.append(..., refit=False) one-step fitted values
+GARCH converged: True
+omega: 0.0376470130115
+alpha[1]: 0.122555645267
+beta[1]: 0.84932985947
+
+Warnings/fallbacks:
+None
+
+                       Zero Mean - GARCH Model Results                        
+==============================================================================
+Dep. Variable:            arima_resid   R-squared:                       0.000
+Mean Model:                 Zero Mean   Adj. R-squared:                  0.000
+Vol Model:                      GARCH   Log-Likelihood:               -3497.36
+Distribution:                  Normal   AIC:                           7000.73
+Method:            Maximum Likelihood   BIC:                           7018.16
+                                        No. Observations:                 2471
+Date:                Mon, May 25 2026   Df Residuals:                     2471
+Time:                        03:44:12   Df Model:                            0
+                              Volatility Model                              
+============================================================================
+                 coef    std err          t      P>|t|      95.0% Conf. Int.
+----------------------------------------------------------------------------
+omega          0.0376  1.687e-02      2.232  2.563e-02 [4.585e-03,7.071e-02]
+alpha[1]       0.1226  2.057e-02      5.957  2.576e-09   [8.223e-02,  0.163]
+beta[1]        0.8493  3.069e-02     27.675 1.406e-168     [  0.789,  0.909]
+============================================================================
+
+Covariance estimator: robust

@@ -1,0 +1,85 @@
+Final Evaluation Summary
+========================
+
+Input prediction files found:
+- outputs/predictions/pred_baseline_mean.csv
+- outputs/predictions/pred_rolling_vol_5.csv
+- outputs/predictions/pred_rolling_vol_10.csv
+- outputs/predictions/pred_rolling_vol_20.csv
+- outputs/predictions/pred_garch_11.csv
+- outputs/predictions/pred_arima_garch.csv
+- outputs/predictions/pred_lstm_base.csv
+- outputs/predictions/pred_lstm_hybrid.csv
+- outputs/predictions/lstm_tuned/pred_hybrid_logtarget.csv
+- outputs/predictions/lstm_tuned/pred_hybrid_logtarget_small.csv
+- outputs/predictions/lstm_tuned/pred_hybrid_qlike.csv
+- outputs/predictions/lstm_tuned/pred_lstm_logtarget.csv
+- outputs/predictions/lstm_tuned/pred_lstm_logtarget_small.csv
+- outputs/predictions/lstm_tuned/pred_lstm_qlike.csv
+
+Models included:
+- HistoricalMean
+- RollingVol-5
+- RollingVol-10
+- RollingVol-20
+- GARCH(1,1)
+- ARIMA-GARCH
+- LSTM
+- ARIMA-GARCH-LSTM
+- LSTM-LogTarget
+- Hybrid-LogTarget
+- LSTM-QLIKE
+- Hybrid-QLIKE
+- LSTM-LogTarget-Small
+- Hybrid-LogTarget-Small
+
+Available-sample row counts by model/split:
+                 model      split  rows
+        HistoricalMean validation   750
+        HistoricalMean       test   745
+          RollingVol-5 validation   750
+          RollingVol-5       test   745
+         RollingVol-10 validation   750
+         RollingVol-10       test   745
+         RollingVol-20 validation   750
+         RollingVol-20       test   745
+            GARCH(1,1) validation   750
+            GARCH(1,1)       test   745
+           ARIMA-GARCH validation   750
+           ARIMA-GARCH       test   745
+                  LSTM validation   731
+                  LSTM       test   726
+      ARIMA-GARCH-LSTM validation   731
+      ARIMA-GARCH-LSTM       test   726
+        LSTM-LogTarget validation   731
+        LSTM-LogTarget       test   726
+      Hybrid-LogTarget validation   731
+      Hybrid-LogTarget       test   726
+            LSTM-QLIKE validation   731
+            LSTM-QLIKE       test   726
+          Hybrid-QLIKE validation   731
+          Hybrid-QLIKE       test   726
+  LSTM-LogTarget-Small validation   731
+  LSTM-LogTarget-Small       test   726
+Hybrid-LogTarget-Small validation   731
+Hybrid-LogTarget-Small       test   726
+
+Common-window row counts by split:
+- validation: 731
+- test: 726
+
+Best model by QLIKE on common test sample: GARCH(1,1) (1.052888)
+Best model by RMSE on common test sample: GARCH(1,1) (3.648839)
+Best model by MAE on common test sample: Hybrid-LogTarget-Small (1.108165)
+
+ARIMA-GARCH-LSTM versus LSTM on common test sample:
+- QLIKE: does not improve (1.168609 vs 1.161001)
+- RMSE: improves (3.763253 vs 3.769716)
+- MAE: does not improve (1.720113 vs 1.639734)
+
+ARIMA-GARCH-LSTM versus GARCH(1,1) on common test sample:
+- QLIKE: does not improve (1.168609 vs 1.052888)
+- RMSE: does not improve (3.763253 vs 3.648839)
+- MAE: does not improve (1.720113 vs 1.393909)
+
+Caution: use the common-window metrics for the main paper comparison because all models are evaluated on the same date/target_date observations.

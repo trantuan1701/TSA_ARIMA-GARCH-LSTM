@@ -1,0 +1,45 @@
+\section{Data and Forecasting Target}
+
+\subsection{Daily VN-Index Data}
+
+The empirical sample uses CafeF VNINDEX daily observations from 2010 through 2025. The cleaned data include open, high, low, close, matched trading volume, and matched trading value. Table~\ref{tab:data-splits} reports the chronological splits. The model-ready sample contains 3968 rows from 2010-02-01 to 2025-12-30 after lagged-return, rolling-volatility, and next-day-target requirements are imposed.
+
+\input{tables/data_splits}
+
+The experimental split is chronological. Training observations end in 2019, validation covers 2020--2022, and the test period begins in 2023. The original common-window comparison uses 726 aligned test observations with target dates from 2023-02-07 to 2025-12-31, so every original model is evaluated on identical forecast origins and labels.
+
+\subsection{Squared-Return Target}
+
+Let \(C_t\) denote the VN-Index close on trading day \(t\). Percentage log return is
+\begin{equation}
+r_t = 100 \log\left(\frac{C_t}{C_{t-1}}\right),
+\end{equation}
+and the daily squared-return variance proxy is
+\begin{equation}
+v_t = r_t^2.
+\end{equation}
+The supervised one-step target is
+\begin{equation}
+y_t = v_{t+1}=r_{t+1}^{2}.
+\end{equation}
+Thus a forecast issued at origin date \(t\) uses information available through \(t\) to predict the target date \(t+1\).
+
+Squared daily return is observable and convenient, but it is a noisy volatility proxy. A single daily return can be small even when intraday variation is high, and a single jump can dominate the proxy. This motivates QLIKE-based evaluation and robustness checks with OHLC range-based volatility proxies.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_rolling_volatility.png}
+\caption{Rolling VN-Index volatility changes materially across the sample, motivating conditional-variance models rather than constant-variance forecasts.}
+\label{fig:rolling-vol}
+\end{figure}
+
+\subsection{OHLC Volatility Proxies}
+
+The proxy robustness analysis constructs seven volatility proxies from the cleaned OHLC sample: close-to-close squared return, Parkinson, Garman-Klass, Rogers-Satchell, and Yang-Zhang rolling proxies over 5, 10, and 20 days. Valid observations range from 3969 for Yang-Zhang 20-day to 3984 for Yang-Zhang 5-day. Correlations with the squared-return proxy are moderate or low: 0.654 for Parkinson, 0.488 for Garman-Klass, 0.345 for Rogers-Satchell, 0.418 for Yang-Zhang 5-day, 0.361 for Yang-Zhang 10-day, and 0.274 for Yang-Zhang 20-day. These values confirm that proxy choice can affect model rankings.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_volatility_proxy_timeseries.png}
+\caption{Alternative volatility proxies have different smoothness and scale, so robustness analysis must distinguish directional conclusions from exact ranking stability.}
+\label{fig:proxy-series}
+\end{figure}

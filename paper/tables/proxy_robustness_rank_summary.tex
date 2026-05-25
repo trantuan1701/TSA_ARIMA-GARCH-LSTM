@@ -1,0 +1,20 @@
+\begin{table*}[!t]
+\centering
+\caption{Volatility-proxy robustness rank summary. Range-based proxies favor advanced asymmetric GARCH-family models more often than the simple GARCH(1,1), but exact rankings remain proxy-sensitive.}
+\label{tab:proxy-robustness}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{0.25\textwidth}r r r r p{0.24\textwidth}@{}}
+\toprule
+Model & Avg. QLIKE rank & Best & Worst & Top-5 proxies & Interpretation \\
+\midrule
+AdvGARCH-BestAsymmetric & \best{3.29} & 1 & 13 & 6/7 & Most stable top model; top-3 under 5/7 proxies \\
+AdvGARCH-BestHeavyTail & 4.43 & 2 & 14 & 5/7 & Robust top model, but not a top-1 proxy winner \\
+AdvGARCH-BestQLIKE & 4.71 & 3 & 10 & 5/7 & Primary validation-selected GARCH-family model remains robust \\
+GARCH(1,1) & 7.00 & 1 & 15 & 2/7 & Strong benchmark, not consistently top-tier under range proxies \\
+ARIMA-GARCH & 9.71 & 3 & 19 & 2/7 & Mean dynamics do not improve proxy robustness \\
+ComboPair-BestGARCHFamily\_HybridQLIKE & 15.14 & 1 & 18 & 1/7 & Best close-to-close result, but proxy-sensitive \\
+Hybrid-QLIKE & 61.29 & 58 & 64 & 0/7 & Pure hybrid QLIKE model is weak under proxy robustness \\
+\bottomrule
+\end{tabular}
+\end{table*}
