@@ -1,20 +1,20 @@
 \begin{table*}[!t]
 \centering
-\caption{Volatility-proxy robustness rank summary. Range-based proxies favor advanced asymmetric GARCH-family models more often than the simple GARCH(1,1), but exact rankings remain proxy-sensitive.}
+\caption{Stage 1 volatility-proxy robustness rank summary. Exact rankings change across close-to-close and range-based proxies, but asymmetric GARCH-family specifications remain robust top performers.}
 \label{tab:proxy-robustness}
 \scriptsize
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}p{0.25\textwidth}r r r r p{0.24\textwidth}@{}}
+\begin{tabular}{@{}L{0.25\textwidth}r r r r L{0.24\textwidth}@{}}
 \toprule
 Model & Avg. QLIKE rank & Best & Worst & Top-5 proxies & Interpretation \\
 \midrule
-AdvGARCH-BestAsymmetric & \best{3.29} & 1 & 13 & 6/7 & Most stable top model; top-3 under 5/7 proxies \\
-AdvGARCH-BestHeavyTail & 4.43 & 2 & 14 & 5/7 & Robust top model, but not a top-1 proxy winner \\
-AdvGARCH-BestQLIKE & 4.71 & 3 & 10 & 5/7 & Primary validation-selected GARCH-family model remains robust \\
-GARCH(1,1) & 7.00 & 1 & 15 & 2/7 & Strong benchmark, not consistently top-tier under range proxies \\
-ARIMA-GARCH & 9.71 & 3 & 19 & 2/7 & Mean dynamics do not improve proxy robustness \\
-ComboPair-BestGARCHFamily\_HybridQLIKE & 15.14 & 1 & 18 & 1/7 & Best close-to-close result, but proxy-sensitive \\
-Hybrid-QLIKE & 61.29 & 58 & 64 & 0/7 & Pure hybrid QLIKE model is weak under proxy robustness \\
+AdvGARCH-BestAsymmetric & \best{3.57} & 1 & 14 & 6/7 & Most stable top model; top-3 under 5/7 proxies \\
+AdvGARCH-BestHeavyTail & 4.71 & 2 & 15 & 5/7 & Robust top model, but not a top-1 proxy winner \\
+AdvGARCH-BestQLIKE & 5.14 & 3 & 11 & 5/7 & Primary validation-selected GARCH-family model remains robust \\
+GARCH(1,1) & 7.71 & 2 & 16 & 2/7 & Strong benchmark, not consistently top-tier under range proxies \\
+EWMA(\(\lambda=0.90\)) & 13.14 & 1 & 58 & 3/7 & Useful industry baseline, but proxy stability is weaker \\
+HAR-Parkinson & 15.14 & 7 & 22 & 0/7 & Strong main-target benchmark, less stable across generated proxies \\
+BestGARCHFamily + HybridQLIKE pair & 16.71 & 1 & 20 & 1/7 & Best close-to-close result, but proxy-sensitive \\
 \bottomrule
 \end{tabular}
 \end{table*}

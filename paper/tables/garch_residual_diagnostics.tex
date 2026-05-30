@@ -1,0 +1,30 @@
+\begin{table*}[!t]
+\centering
+\caption{Post-fit residual diagnostics for selected GARCH-family models.}
+\label{tab:garch-residual-diagnostics}
+\scriptsize
+\begin{tabular}{@{}L{0.20\textwidth}L{0.10\textwidth}L{0.19\textwidth}rrrr@{}}
+\toprule
+Model & Test & Series & Lag & Statistic & \(p\)-value & Flag \\
+\midrule
+GARCH(1,1) & Ljung-Box & Squared std. resid. & 5 & 1.283 & 0.937 & not\_rejected \\
+GARCH(1,1) & Ljung-Box & Squared std. resid. & 10 & 3.417 & 0.97 & not\_rejected \\
+GARCH(1,1) & Ljung-Box & Squared std. resid. & 20 & 14.273 & 0.816 & not\_rejected \\
+GARCH(1,1) & ARCH-LM & Std. resid. & 5 & 1.267 & 0.938 & not\_rejected \\
+GARCH(1,1) & ARCH-LM & Std. resid. & 10 & 3.357 & 0.972 & not\_rejected \\
+GARCH(1,1) & ARCH-LM & Std. resid. & 20 & 13.936 & 0.834 & not\_rejected \\
+AdvGARCH-BestQLIKE & Ljung-Box & Squared std. resid. & 5 & 2.309 & 0.805 & not\_rejected \\
+AdvGARCH-BestQLIKE & Ljung-Box & Squared std. resid. & 10 & 3.789 & 0.956 & not\_rejected \\
+AdvGARCH-BestQLIKE & Ljung-Box & Squared std. resid. & 20 & 15.057 & 0.773 & not\_rejected \\
+AdvGARCH-BestQLIKE & ARCH-LM & Std. resid. & 5 & 2.273 & 0.81 & not\_rejected \\
+AdvGARCH-BestQLIKE & ARCH-LM & Std. resid. & 10 & 3.699 & 0.96 & not\_rejected \\
+AdvGARCH-BestQLIKE & ARCH-LM & Std. resid. & 20 & 14.517 & 0.803 & not\_rejected \\
+AdvGARCH-BestAsymmetric & Ljung-Box & Squared std. resid. & 5 & 1.938 & 0.858 & not\_rejected \\
+AdvGARCH-BestAsymmetric & Ljung-Box & Squared std. resid. & 10 & 3.249 & 0.975 & not\_rejected \\
+AdvGARCH-BestAsymmetric & Ljung-Box & Squared std. resid. & 20 & 15.089 & 0.771 & not\_rejected \\
+AdvGARCH-BestAsymmetric & ARCH-LM & Std. resid. & 5 & 1.921 & 0.86 & not\_rejected \\
+AdvGARCH-BestAsymmetric & ARCH-LM & Std. resid. & 10 & 3.213 & 0.976 & not\_rejected \\
+AdvGARCH-BestAsymmetric & ARCH-LM & Std. resid. & 20 & 14.528 & 0.803 & not\_rejected \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -569,16 +569,97 @@ def create_sequences(
     )
 
 
+def create_sequences_with_context(
+    context_df: pd.DataFrame,
+    context_features: np.ndarray,
+    target_df: pd.DataFrame,
+    seq_len: int,
+    split_name: str,
+) -> tuple[np.ndarray, np.ndarray, pd.DataFrame]:
+    """Create target-split sequences from already available chronological context."""
+
+    if len(context_df) != len(context_features):
+        raise ValueError(
+            f"{split_name} context has {len(context_df)} rows but feature matrix has "
+            f"{len(context_features)} rows."
+        )
+    if context_df.duplicated(["date", "target_date"]).any():
+        raise ValueError(f"{split_name} context has duplicate date/target_date rows.")
+
+    indexed = context_df.reset_index().rename(columns={"index": "_context_index"})
+    target_positions = target_df[["date", "target_date"]].merge(
+        indexed[["date", "target_date", "_context_index"]],
+        on=["date", "target_date"],
+        how="left",
+        validate="one_to_one",
+    )
+    if target_positions["_context_index"].isna().any():
+        missing = target_positions.loc[target_positions["_context_index"].isna(), ["date", "target_date"]].head(5)
+        raise ValueError(f"{split_name} target rows missing from context:\n{missing.to_string(index=False)}")
+
+    x_values: list[np.ndarray] = []
+    y_values: list[float] = []
+    meta_rows: list[dict[str, Any]] = []
+    targets = context_df["target_var_next"].to_numpy(dtype=float)
+
+    for _, position_row in target_positions.iterrows():
+        end_idx = int(position_row["_context_index"])
+        start_idx = end_idx - seq_len + 1
+        if start_idx < 0:
+            continue
+        row = context_df.iloc[end_idx]
+        sequence_dates = context_df.iloc[start_idx : end_idx + 1]["date"]
+        if sequence_dates.max() > row["date"]:
+            raise ValueError(f"{split_name} context sequence includes a future date.")
+        x_values.append(context_features[start_idx : end_idx + 1])
+        y_values.append(float(targets[end_idx]))
+        meta_rows.append(
+            {
+                "date": row["date"],
+                "target_date": row["target_date"],
+                "target_var_next": float(row["target_var_next"]),
+                "target_var_next_raw": row["_target_var_next_raw"],
+            }
+        )
+
+    if not x_values:
+        raise ValueError(f"{split_name} produced no context-aware sequences.")
+
+    return (
+        np.asarray(x_values, dtype=np.float32),
+        np.asarray(y_values, dtype=np.float32),
+        pd.DataFrame(meta_rows),
+    )
+
+
 def build_sequence_data(
     splits: dict[str, pd.DataFrame],
     transformed: dict[str, np.ndarray],
     seq_len: int,
 ) -> SequenceData:
     x_train, y_train, _train_meta = create_sequences(splits["train"], transformed["train"], seq_len, "train")
-    x_validation, y_validation, validation_meta = create_sequences(
-        splits["validation"], transformed["validation"], seq_len, "validation"
+    context_df = pd.concat(
+        [splits["train"], splits["validation"], splits["test"]],
+        ignore_index=True,
+    ).sort_values("date").reset_index(drop=True)
+    context_features = np.concatenate(
+        [transformed["train"], transformed["validation"], transformed["test"]],
+        axis=0,
     )
-    x_test, y_test, test_meta = create_sequences(splits["test"], transformed["test"], seq_len, "test")
+    x_validation, y_validation, validation_meta = create_sequences_with_context(
+        context_df,
+        context_features,
+        splits["validation"],
+        seq_len,
+        "validation",
+    )
+    x_test, y_test, test_meta = create_sequences_with_context(
+        context_df,
+        context_features,
+        splits["test"],
+        seq_len,
+        "test",
+    )
     return SequenceData(
         x_train=x_train,
         y_train_raw=y_train,
@@ -985,7 +1066,7 @@ def leakage_report(base_features: list[str], hybrid_features: list[str]) -> list
         "target_var_next, target_date, date, and split are excluded from all feature lists.",
         "Median imputers are fit only on training feature rows.",
         "StandardScalers are fit only on training imputed feature rows.",
-        "Validation and test sequences are created independently within their own split.",
+        "Validation and test sequences may use earlier chronological context, but every sequence ends at the forecast origin.",
         "Test data is not passed to model.fit, EarlyStopping, or ReduceLROnPlateau.",
         "Best tuned base and hybrid models are selected by validation QLIKE only.",
         "Prediction actual_var is copied from target_var_next and checked before saving.",

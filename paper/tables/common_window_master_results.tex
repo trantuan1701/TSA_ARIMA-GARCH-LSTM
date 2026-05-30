@@ -1,0 +1,29 @@
+\begin{table*}[!t]
+\centering
+\caption{Primary common-window test results. All models use target dates 2023-02-07 to 2025-12-31 and the same next-day squared percentage log-return target.}
+\label{tab:common-window-master}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}r L{0.22\textwidth} L{0.30\textwidth} r r r r r@{}}
+\toprule
+Rank & Model & Selection role & \(N\) & QLIKE & RMSE & MAE & Pred./Actual \\
+\midrule
+1 & AdvGARCH-BestAsymmetric & validation\_selected\_asymmetric\_garch\_comparator & 726 & 1.021413 & 3.565782 & 1.314342 & 0.933 \\
+2 & AdvGARCH-BestQLIKE & validation\_selected\_primary\_advanced\_garch & 726 & 1.022898 & 3.583987 & 1.318196 & 0.931 \\
+3 & HAR-Parkinson & validation\_selected\_har & 726 & 1.029373 & 3.621325 & 1.353338 & 0.971 \\
+4 & HAR-SquaredReturn & predeclared\_har\_comparator & 726 & 1.039364 & 3.590457 & 1.355566 & 0.993 \\
+5 & GARCH(1,1) & training\_selected\_econometric\_benchmark & 726 & 1.052888 & 3.648839 & 1.393909 & 1.024 \\
+6 & ARIMA-GARCH & training\_aic\_mean\_model\_plus\_garch\_benchmark & 726 & 1.055679 & 3.671816 & 1.400256 & 1.020 \\
+7 & ComboStack-PoolD\_AllStable & validation\_selected\_forecast\_combination & 726 & 1.113530 & 3.665685 & 1.671985 & 1.398 \\
+8 & Calibrated-Hybrid-LogTarget-Small-isotonic & validation\_selected\_calibrated\_neural & 726 & 1.118671 & 3.666914 & 1.619575 & 1.326 \\
+9 & LSTM & validation\_monitored\_neural\_baseline & 726 & 1.161001 & 3.769716 & 1.639734 & 1.294 \\
+10 & ARIMA-GARCH-LSTM & validation\_monitored\_hybrid\_neural\_baseline & 726 & 1.168609 & 3.763253 & 1.720113 & 1.404 \\
+11 & HistoricalMean & fixed\_baseline & 726 & 1.192259 & 3.799706 & 1.449153 & 0.989 \\
+12 & EWMA(lambda=0.90) & validation\_selected\_ewma & 726 & 1.219608 & 3.716363 & 1.410256 & 1.000 \\
+13 & Hybrid-QLIKE & validation\_selected\_tuned\_hybrid\_neural & 726 & 1.230508 & 3.807296 & 1.862578 & 1.549 \\
+14 & RollingVol-20 & fixed\_baseline & 726 & 1.280635 & 3.901051 & 1.462196 & 0.997 \\
+15 & RollingVol-10 & fixed\_baseline & 726 & 1.309964 & 3.974129 & 1.478891 & 1.005 \\
+16 & RollingVol-5 & fixed\_baseline & 726 & 1.928009 & 4.011383 & 1.492394 & 0.992 \\
+\bottomrule
+\end{tabular}
+\end{table*}

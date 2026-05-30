@@ -1,4 +1,4 @@
-\section{Data and Forecasting Target}
+\section{Data and Econometric Motivation}
 
 \subsection{Daily VN-Index Data}
 
@@ -6,15 +6,15 @@ The empirical sample uses CafeF VNINDEX daily observations from 2010 through 202
 
 \input{tables/data_splits}
 
-The experimental split is chronological. Training observations end in 2019, validation covers 2020--2022, and the test period begins in 2023. The original common-window comparison uses 726 aligned test observations with target dates from 2023-02-07 to 2025-12-31, so every original model is evaluated on identical forecast origins and labels.
+The split is chronological. Training observations end in 2019, validation covers 2020--2022, and the test period begins in 2023. The authoritative primary leaderboard uses the common intersection of all primary prediction files: forecast origins from 2023-02-06 to 2025-12-30 and target dates from 2023-02-07 to 2025-12-31, with \(N=726\) for every primary model.
 
-\subsection{Squared-Return Target}
+\subsection{Return and Target Definitions}
 
 Let \(C_t\) denote the VN-Index close on trading day \(t\). Percentage log return is
 \begin{equation}
 r_t = 100 \log\left(\frac{C_t}{C_{t-1}}\right),
 \end{equation}
-and the daily squared-return variance proxy is
+and the daily squared-return volatility proxy is
 \begin{equation}
 v_t = r_t^2.
 \end{equation}
@@ -22,24 +22,36 @@ The supervised one-step target is
 \begin{equation}
 y_t = v_{t+1}=r_{t+1}^{2}.
 \end{equation}
-Thus a forecast issued at origin date \(t\) uses information available through \(t\) to predict the target date \(t+1\).
+Thus a forecast issued at origin date \(t\) uses information available through \(t\) to predict the variance proxy for target date \(t+1\). Returns are measured in percentage units, so \(v_t\) and \(y_t\) are percentage-squared variance proxies.
 
-Squared daily return is observable and convenient, but it is a noisy volatility proxy. A single daily return can be small even when intraday variation is high, and a single jump can dominate the proxy. This motivates QLIKE-based evaluation and robustness checks with OHLC range-based volatility proxies.
+Squared daily return is observable and simple, but noisy. A single close-to-close return can be small even when intraday variation is high, and a single jump can dominate the proxy. For this reason, the paper uses QLIKE as the main loss and reports robustness checks with daily OHLC range-based volatility proxies.
+
+\subsection{Descriptive Return Evidence}
+
+\input{tables/return_descriptive_statistics}
+
+Table~\ref{tab:return-descriptive-statistics} shows that VN-Index daily returns are not approximately Gaussian. The mean return is small relative to the standard deviation, while skewness is negative and excess kurtosis is high. The Jarque-Bera statistic strongly rejects normality. This matters for volatility and VaR because extreme observations are more frequent than a Normal model would suggest, and downside shocks are economically important for market-risk applications.
 
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\columnwidth]{fig_rolling_volatility.png}
-\caption{Rolling VN-Index volatility changes materially across the sample, motivating conditional-variance models rather than constant-variance forecasts.}
-\label{fig:rolling-vol}
+\includegraphics[width=\columnwidth]{fig_return_descriptive_diagnostics.png}
+\caption{VN-Index returns, squared returns, and return distribution. The time series shows volatility clustering and occasional large shocks.}
+\label{fig:return-descriptive-diagnostics}
+\end{figure}
+
+\subsection{Volatility Clustering and ARCH Effects}
+
+\input{tables/volatility_clustering_diagnostics}
+
+Table~\ref{tab:volatility-clustering-diagnostics} provides formal motivation for conditional-variance modeling. Ljung-Box tests on squared returns and ARCH-LM tests reject the absence of volatility dependence at lags 5, 10, and 20. Raw return dependence is weaker and economically less central than squared-return dependence. This is the standard econometric pattern behind ARCH and GARCH models: conditional means are hard to forecast, but conditional variance is persistent.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig_return_acf_diagnostics.png}
+\caption{ACF diagnostics for returns, squared returns, and absolute returns. Squared and absolute returns display more persistent dependence than raw returns.}
+\label{fig:return-acf-diagnostics}
 \end{figure}
 
 \subsection{OHLC Volatility Proxies}
 
-The proxy robustness analysis constructs seven volatility proxies from the cleaned OHLC sample: close-to-close squared return, Parkinson, Garman-Klass, Rogers-Satchell, and Yang-Zhang rolling proxies over 5, 10, and 20 days. Valid observations range from 3969 for Yang-Zhang 20-day to 3984 for Yang-Zhang 5-day. Correlations with the squared-return proxy are moderate or low: 0.654 for Parkinson, 0.488 for Garman-Klass, 0.345 for Rogers-Satchell, 0.418 for Yang-Zhang 5-day, 0.361 for Yang-Zhang 10-day, and 0.274 for Yang-Zhang 20-day. These values confirm that proxy choice can affect model rankings.
-
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\columnwidth]{fig_volatility_proxy_timeseries.png}
-\caption{Alternative volatility proxies have different smoothness and scale, so robustness analysis must distinguish directional conclusions from exact ranking stability.}
-\label{fig:proxy-series}
-\end{figure}
+The daily proxy robustness analysis uses close-to-close squared return, Parkinson, Garman-Klass, and Rogers-Satchell variance proxies as same-horizon daily alternatives. Rolling Yang-Zhang 5-, 10-, and 20-day proxies are retained only as smoothed sensitivity checks because they are overlapping measurements and not identical to the one-day-ahead squared-return target. The main paper therefore emphasizes the daily proxy results and treats rolling proxy rankings as appendix-level sensitivity evidence.

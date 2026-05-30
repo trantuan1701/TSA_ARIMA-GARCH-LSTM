@@ -1,32 +1,58 @@
-\section{Models}
+\section{Forecasting Models and Experimental Protocol}
 
-\subsection{Baselines}
+\subsection{Benchmark Models}
 
-The historical mean baseline predicts the training-sample average variance. Rolling baselines use 5-, 10-, and 20-day trailing return volatility, squared to produce variance forecasts. These simple baselines are important because volatility is persistent and recent realized variation can be competitive over short horizons.
+The benchmark set begins with simple variance forecasts. The historical mean predicts the training-sample average squared return. RollingVol-5, RollingVol-10, and RollingVol-20 use trailing rolling volatility, squared to produce variance forecasts. These baselines are intentionally simple, but they are useful because volatility persistence can make recent realized variation competitive.
 
-\subsection{GARCH(1,1) and ARIMA-GARCH}
+The EWMA/RiskMetrics model follows
+\begin{equation}
+\sigma_{t+1}^{2} = \lambda\sigma_t^2+(1-\lambda)r_t^2,
+\end{equation}
+where \(r_t^2\) is the current squared percentage return. The decay parameter is selected by validation QLIKE from \(\lambda\in\{0.90,0.94,0.97,0.99\}\), and the selected model is EWMA(\(\lambda=0.90\)).
 
-GARCH(1,1) models conditional variance as
+HAR-type models approximate heterogeneous volatility persistence with daily, weekly, and monthly components:
+\begin{equation}
+y_{t+1} = \beta_0+\beta_d RV_{d,t}+\beta_w RV_{w,t}+\beta_m RV_{m,t}+\varepsilon_{t+1}.
+\end{equation}
+HAR-SquaredReturn uses squared-return components. HAR-Parkinson replaces them with daily and averaged Parkinson range-variance components and is selected as the primary HAR variant by validation QLIKE.
+
+\subsection{GARCH-Family Models}
+
+The standard GARCH(1,1) benchmark is
 \begin{align}
 r_t &= \mu+\epsilon_t,\qquad \epsilon_t=\sigma_t z_t,\\
 \sigma_t^2 &= \omega+\alpha\epsilon_{t-1}^{2}+\beta\sigma_{t-1}^{2}.
 \end{align}
-The parameters are estimated on the training split. Validation and test forecasts use fixed estimated parameters while recursively updating the volatility state with returns observed before each forecast origin.
+Parameters are estimated on the training split for the static protocol. Validation and test forecasts use fixed estimated parameters while recursively updating the volatility state with returns observed before each forecast origin.
 
-ARIMA-GARCH first models the conditional mean of returns using ARIMA and then fits GARCH(1,1) to the ARIMA residuals. The implemented ARIMA order selection considers \(p,q\in\{0,1,2,3\}\) with \(d=0\) using training AIC, selecting ARIMA(0,0,3) for the original benchmark. This design tests whether filtering mean dynamics adds volatility-forecasting value beyond direct GARCH variance modeling.
+ARIMA-GARCH first models return mean dynamics using a training-AIC ARIMA selection over \(p,q\in\{0,1,2,3\}\) with \(d=0\), then fits GARCH(1,1) to the residuals. The original benchmark selects ARIMA(0,0,3).
 
-\subsection{Advanced GARCH-Family Search}
+The advanced GARCH-family search evaluates direct ARCH-family and two-step ARIMA-GARCH candidates. It includes ARCH, GARCH, EGARCH, GJR-GARCH, APARCH, and FIGARCH-type specifications with Normal, Student-\(t\), skewed-\(t\), and GED innovations where supported. Candidate selection uses validation QLIKE only. The primary advanced model is AdvGARCH-BestQLIKE, an ARIMA(3,0,3)-EGARCH(1,1,2)-Normal specification. AdvGARCH-BestAsymmetric is reported as a category-selected asymmetric comparator, not as the primary winner merely because its test QLIKE is slightly lower.
 
-The advanced search evaluates direct ARCH-family and two-step ARIMA-GARCH candidates. It includes ARCH, GARCH, EGARCH, GJR-GARCH, APARCH, and FIGARCH-type specifications with Normal, Student-\(t\), skewed-\(t\), and GED innovation distributions where supported by the fitting library. Candidate selection uses validation QLIKE. Test results are reported only after a model or category has been selected on validation data.
+\input{tables/advanced_garch_failure_audit}
 
-The search attempts 3,168 GARCH-family candidates. It records 2,592 successful fits and 576 failures, all classified as numerical errors such as non-finite forecasts. The best overall validation-selected GARCH-family model is AdvGARCH-BestQLIKE, an ARIMA(3,0,3)-EGARCH(1,1,2)-Normal specification. Category selections also identify the best asymmetric, heavy-tail, and symmetric variants.
+The search attempts 3,168 candidates, with 2,592 successful fits and 576 failures. Table~\ref{tab:advanced-garch-failure-audit} reconciles the failures: 432 are invalid forecast-start failures for AR-mean lag specifications and 144 are non-finite forecast failures. This audit is important because large specification searches can look precise while hiding numerical fragility.
 
 \subsection{Neural, Hybrid, Calibration, and Combination Models}
 
-The base LSTM uses length-20 sequences of lagged market and volatility features, including returns, squared returns, absolute returns, rolling volatility, volume, and trading value. The ARIMA-GARCH-LSTM hybrid augments these inputs with econometric variance and residual-related features. Tuned neural variants include log-target training and QLIKE-style loss training; selection is by validation QLIKE within the relevant neural group.
+The base LSTM uses length-20 sequences of lagged market and volatility features, including returns, squared returns, absolute returns, rolling volatility, volume, and trading value. The ARIMA-GARCH-LSTM hybrid augments these inputs with econometric variance and residual-related features. Tuned neural variants include log-target training and QLIKE-style loss training; selection is by validation QLIKE within the neural group.
 
-Log-target models train on transformed variance targets and invert predictions back to the variance scale. This can stabilize training, but it can also produce low and smooth forecasts if scale is not recovered well. Calibration methods therefore include multiplicative QLIKE scaling, mean matching, nonnegative affine calibration, and isotonic calibration fitted on validation data only. Forecast combinations include equal-weight means, medians, two-model convex combinations, and stacking weights selected by validation QLIKE.
+Calibration methods include multiplicative QLIKE scaling, mean matching, nonnegative affine calibration, and isotonic calibration fitted on validation data only. Forecast combinations include equal-weight means, medians, two-model convex combinations, and stacking weights selected by validation QLIKE. Test-best combinations are treated as exploratory and are not used as primary evidence.
 
-\subsection{Risk Forecasts}
+The neural sequence-construction code has been corrected so validation and test forecasts may use valid pre-split historical context without target leakage. The checked-in neural forecasts were not retrained in the final pass, so the primary comparison remains the fair 726-date common window shared by all existing primary artifacts.
 
-Variance forecasts are mapped to VaR forecasts under a common Normal-quantile rule so that different variance models can be compared under a shared risk backtesting convention. The backtests report violation counts, expected violation counts, Kupiec unconditional coverage statistics, and Christoffersen independence and conditional coverage diagnostics.
+\subsection{Evaluation Protocol}
+
+For aligned observations \(\{y_t,\hat{y}_t\}_{t=1}^n\), the evaluation uses
+\begin{align}
+\mathrm{RMSE} &= \sqrt{\frac{1}{n}\sum_{t=1}^{n}(y_t-\hat{y}_t)^2},\\
+\mathrm{MAE} &= \frac{1}{n}\sum_{t=1}^{n}|y_t-\hat{y}_t|,\\
+\mathrm{QLIKE} &= \frac{1}{n}\sum_{t=1}^{n}\left(\log(\hat{y}_t)+\frac{y_t}{\hat{y}_t}\right).
+\end{align}
+Predicted variances are clipped at \(\epsilon=10^{-8}\) before QLIKE computation. QLIKE is central because severe variance underprediction is penalized through \(y_t/\hat{y}_t\).
+
+Paired comparisons align observations by origin and target date, not by row order. Diebold-Mariano-style tests use loss differences relative to GARCH(1,1), and Holm correction is applied within clearly defined loss families. Regime and spike diagnostics use the common-window actual variance distribution. VaR diagnostics use a common Normal variance-to-VaR mapping so that all variance forecasts are translated into risk signals under the same distributional assumption. This is not a complete model-specific tail-distribution evaluation.
+
+\subsection{Expanding-Window Refit Robustness}
+
+The refit robustness experiment does not rerun the full advanced search. It fixes the validation-selected specifications and compares the static train-only forecast protocol with an expanding-window monthly refit protocol for GARCH(1,1), ARIMA-GARCH, EWMA(\(\lambda=0.90\)), HAR-Parkinson, AdvGARCH-BestQLIKE, and AdvGARCH-BestAsymmetric. At each monthly refit date, parameters are estimated using observations available before that month, and one-step forecasts are generated for that month. Failed refits are recorded explicitly rather than silently dropped.

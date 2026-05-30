@@ -1,19 +1,17 @@
 \section{Introduction}
 
-Volatility forecasting is risk forecasting, not price forecasting. For an equity index, a one-step variance forecast summarizes the expected magnitude of tomorrow's return shock and therefore supports margin setting, risk limits, Value-at-Risk (VaR), and portfolio allocation. The VN-Index is a natural empirical setting because daily returns exhibit volatility clustering and occasional large moves, while the true latent conditional variance is unobserved.
+Volatility forecasting is a practical market-risk problem. For an equity index, a one-step-ahead conditional-variance forecast summarizes the expected scale of the next return shock and feeds into risk limits, margin decisions, portfolio monitoring, and Value-at-Risk (VaR). A model can look accurate on average while still being too low when volatility spikes, which is exactly when risk forecasts matter most.
 
-This study evaluates one-step-ahead daily VN-Index volatility forecasts using daily CafeF VNINDEX observations. The forecasting target is the next-trading-day squared percentage log return. The comparison spans historical and rolling variance baselines, GARCH(1,1), ARIMA-GARCH, LSTM, ARIMA-GARCH-LSTM, tuned neural variants, a broad GARCH-family search, refit protocols, validation-calibrated neural forecasts, forecast combinations, VaR backtests, and robustness checks based on OHLC range estimators.
+The VN-Index is a useful Vietnamese equity-market case study. It is an emerging-market index with visible volatility clustering, sharp drawdowns, and changing trading conditions, but without the routine high-frequency realized-volatility data often used in developed-market volatility studies. Daily open, high, low, close, volume, and trading-value data therefore create a realistic empirical setting: forecasts must be made from daily information, and latent volatility must be evaluated through imperfect observable proxies.
 
-The paper is not framed as a contest between deep learning and GARCH. A more useful framing is benchmark reliability under a disciplined empirical protocol. Strong classical baselines matter because volatility targets are noisy, and flexible models can appear attractive under one loss while failing under another. This is especially important when mean absolute error (MAE) rewards smooth low forecasts on calm days but does not penalize volatility-spike underprediction as directly as QLIKE.
+This paper is positioned as a reproducible empirical financial econometrics study, not as a new forecasting algorithm. The main question is whether daily VN-Index volatility can be forecast reliably using standard financial econometric models, and whether neural or hybrid alternatives provide robust gains once model selection, proxy uncertainty, and tail-risk diagnostics are considered. The main target is next-day squared percentage log return, and the primary comparison uses a leakage-safe common test window with identical dates for all primary models.
 
-The main findings are cautious. GARCH(1,1) is a strong original benchmark on the common test window. Broader validation-based GARCH-family selection and OHLC proxy robustness favor asymmetric or EGARCH-type specifications, but formal statistical superiority over GARCH(1,1) should not be overstated after multiple-testing adjustment. Neural and hybrid forecasts can contain complementary information, especially after calibration, yet they do not robustly dominate GARCH-family forecasts.
-
-The contributions are as follows:
+The contribution is fourfold:
 \begin{enumerate}
-\item A reproducible VN-Index volatility forecasting benchmark using daily CafeF data and a one-step-ahead squared-return variance target.
-\item A broad empirical comparison of simple baselines, GARCH-family models, LSTM, ARIMA-GARCH-LSTM, calibrated neural forecasts, refit protocols, and forecast combinations.
-\item Statistical forecast comparison using Diebold-Mariano tests, Holm multiple-testing correction, and an approximate model confidence set.
-\item Risk evaluation through VaR backtesting at 5\% and 1\% tail levels.
-\item Robustness analysis using Parkinson, Garman-Klass, Rogers-Satchell, and Yang-Zhang OHLC volatility proxies.
-\item Evidence that GARCH-family models are the most reliable class in this setting, with advanced asymmetric specifications more robust than the simple GARCH(1,1), while neural and hybrid models do not consistently dominate.
+\item A reproducible, leakage-safe out-of-sample comparison of daily VN-Index volatility forecasts on a unified 726-observation test window.
+\item Econometric evidence on VN-Index return non-normality, volatility clustering, ARCH effects, and conditional-variance persistence.
+\item A validation-based comparison of EWMA, HAR, GARCH-family, neural, hybrid, calibrated, and combined volatility forecasts.
+\item Proxy-robustness, spike-underprediction, refit-robustness, and common-Normal VaR diagnostics that connect average forecast accuracy to practical risk interpretation.
 \end{enumerate}
+
+The verified evidence supports a conservative conclusion. Selected GARCH-family specifications and HAR-Parkinson form the strongest group of daily VN-Index volatility forecasts under the unified common-window protocol. The results are economically consistent with persistent conditional variance and useful OHLC range information. The implemented neural and hybrid forecasts may contain complementary information, but they do not robustly dominate the strongest econometric benchmarks. Tail-risk diagnostics further show that good average QLIKE does not automatically imply adequate one-percent VaR coverage under a common-Normal mapping.

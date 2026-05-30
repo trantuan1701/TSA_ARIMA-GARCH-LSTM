@@ -1,0 +1,3 @@
+failure_reason,error_type,stage,count
+numerical error,ValueError,fit_or_forecast,432
+numerical error,FloatingPointError,fit_or_forecast,144

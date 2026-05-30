@@ -1,0 +1,22 @@
+\begin{table*}[!t]
+\centering
+\caption{Stage 1 regime, spike, and 1\% VaR diagnostics. Average QLIKE hides a common practical weakness: most forecasts remain too smooth on spike days, and tail coverage can fail even when average volatility loss is competitive.}
+\label{tab:stage1-risk-diagnostics}
+\scriptsize
+\renewcommand{\arraystretch}{0.95}
+\setlength{\tabcolsep}{2pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}l r r r l L{0.28\textwidth}@{}}
+\toprule
+Model & Extreme-regime QLIKE & Severe spike underpred. & Spike pred./actual & 1\% VaR violations & Interpretation \\
+\midrule
+GARCH(1,1) & 6.758 & 86.7\% & 0.273 & 16/745 (\(p=0.00631\)) & Strong average benchmark, but strict tail coverage fails \\
+AdvGARCH-BestQLIKE & 6.756 & 88.9\% & 0.251 & 15/745 (\(p=0.01453\)) & Primary advanced model; spike timing remains imperfect \\
+HAR-Parkinson & 6.335 & 88.9\% & 0.245 & 16/745 (\(p=0.00631\)) & Competitive average QLIKE with similar tail undercoverage \\
+EWMA(\(\lambda=0.90\)) & 8.345 & 88.9\% & 0.266 & 18/745 (\(p=0.00101\)) & Complete industry baseline, but weaker under extreme volatility \\
+LSTM-LogTarget & 20.256 & 100.0\% & 0.056 & 56/726 (\(p=3.81{\times}10^{-31}\)) & Low smooth forecasts severely understate spikes and tails \\
+Hybrid-LogTarget-Small & 19.929 & 100.0\% & 0.060 & 48/726 (\(p=5.02{\times}10^{-24}\)) & Low MAE does not translate into risk reliability \\
+\bottomrule
+\end{tabular}
+}
+\end{table*}

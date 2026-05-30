@@ -1,6 +1,6 @@
 PYTHON ?= python
 
-.PHONY: data econometric lstm tune evaluate diagnostics statistical-tests robustness empirical-rigor advanced-model-search advanced-combinations advanced-hypothesis-tests advanced-var advanced-experiments proxy-robustness paper test all clean-cache
+.PHONY: data econometric lstm tune evaluate diagnostics statistical-tests robustness empirical-rigor advanced-model-search advanced-combinations advanced-hypothesis-tests advanced-var advanced-experiments proxy-robustness final-artifacts final-audit stage1-audit stage1-baselines stage1-risk stage1-diagnostics stage1-robustness stage1-test stage1-all paper test all clean-cache
 
 data:
 	$(PYTHON) src/prepare_data.py
@@ -48,6 +48,33 @@ advanced-experiments:
 
 proxy-robustness:
 	PYTHONDONTWRITEBYTECODE=1 python src/proxy_robustness.py
+
+final-artifacts:
+	PYTHONDONTWRITEBYTECODE=1 python src/final_financial_econometrics.py all
+
+final-audit:
+	PYTHONDONTWRITEBYTECODE=1 python src/final_financial_econometrics.py audit
+
+stage1-audit:
+	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) src/stage1_extensions.py audit
+
+stage1-baselines:
+	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) src/stage1_extensions.py baselines
+
+stage1-risk:
+	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) src/stage1_extensions.py risk
+
+stage1-diagnostics:
+	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) src/stage1_extensions.py diagnostics
+
+stage1-robustness:
+	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) src/stage1_extensions.py robustness
+
+stage1-test:
+	PYTHONDONTWRITEBYTECODE=1 pytest
+
+stage1-all:
+	PYTHONDONTWRITEBYTECODE=1 $(PYTHON) src/stage1_extensions.py all
 
 paper:
 	$(MAKE) -C paper all

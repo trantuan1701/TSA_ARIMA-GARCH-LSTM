@@ -1,0 +1,26 @@
+\begin{table*}[!t]
+\centering
+\caption{Selected GARCH-family parameter diagnostics. Persistence and half-life are reported only where the formula is technically appropriate.}
+\label{tab:garch-parameter-diagnostics}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}L{0.20\textwidth}L{0.16\textwidth}L{0.10\textwidth}rrrrL{0.13\textwidth}@{}}
+\toprule
+Model & Variance equation & Parameter & Estimate & Std. err. & \(p\)-value & Persistence & Validity \\
+\midrule
+GARCH(1,1) & GARCH(1,1) & mu & 0.0456 & 0.0204 & 0.0256 & 0.9733 & stationary \\
+GARCH(1,1) & GARCH(1,1) & omega & 0.0374 & 0.0163 & 0.022 & 0.9733 & stationary \\
+GARCH(1,1) & GARCH(1,1) & alpha[1] & 0.1257 & 0.0212 & 3.16e-09 & 0.9733 & stationary \\
+GARCH(1,1) & GARCH(1,1) & beta[1] & 0.8476 & 0.0303 & 1.61e-172 & 0.9733 & stationary \\
+AdvGARCH-BestQLIKE & EGARCH(1,1,2) & omega & 0.0063 & 0.0057 & 0.273 & 0.9503 & EGARCH persist. \\
+AdvGARCH-BestQLIKE & EGARCH(1,1,2) & alpha[1] & 0.2380 & 0.0271 & 1.84e-18 & 0.9503 & EGARCH persist. \\
+AdvGARCH-BestQLIKE & EGARCH(1,1,2) & gamma[1] & -0.0440 & 0.0186 & 0.0178 & 0.9503 & EGARCH persist. \\
+AdvGARCH-BestQLIKE & EGARCH(1,1,2) & beta[1] & 0.9503 & 0.1492 & 1.91e-10 & 0.9503 & EGARCH persist. \\
+AdvGARCH-BestQLIKE & EGARCH(1,1,2) & beta[2] & 0.0000 & 0.1536 & 1 & 0.9503 & EGARCH persist. \\
+AdvGARCH-BestAsymmetric & EGARCH(1,1,1) & omega & 0.0088 & 0.0056 & 0.116 & 0.9532 & EGARCH persist. \\
+AdvGARCH-BestAsymmetric & EGARCH(1,1,1) & alpha[1] & 0.2353 & 0.0283 & 1e-16 & 0.9532 & EGARCH persist. \\
+AdvGARCH-BestAsymmetric & EGARCH(1,1,1) & gamma[1] & -0.0430 & 0.0189 & 0.0228 & 0.9532 & EGARCH persist. \\
+AdvGARCH-BestAsymmetric & EGARCH(1,1,1) & beta[1] & 0.9532 & 0.0139 & 0 & 0.9532 & EGARCH persist. \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -5,6 +5,8 @@ scikit-learn
 statsmodels
 arch
 tensorflow
+scipy
+pyarrow
 openpyxl
 requests
 joblib

@@ -1,0 +1,31 @@
+\begin{tabular}{l l r r r r r r r r}
+\hline
+model & model\_group & n\_obs & rmse & mae & qlike & pred\_actual\_ratio & extreme\_regime\_qlike & spike90\_severe\_underprediction\_rate & var1\_violation\_rate \\
+\hline
+ComboPair-BestGARCHFamily\_HybridQLIKE & benchmark\_garch\_family & 726 & 3.607900 & 1.431155 & 1.026265 & 1.098024 & 5.474242 & 0.883721 & 0.016529 \\
+AdvGARCH-BestQLIKE & benchmark\_garch\_family & 745 & 3.561391 & 1.324605 & 1.032548 & 0.935799 & 6.755769 & 0.888889 & 0.020134 \\
+ComboPair-BestRefitGARCH\_HybridQLIKE & benchmark\_garch\_family & 726 & 3.595016 & 1.491585 & 1.047182 & 1.190841 & 5.355305 & 0.837209 & 0.016529 \\
+ComboPair-GARCH11\_HybridQLIKE & benchmark\_garch\_family & 726 & 3.641724 & 1.519432 & 1.058475 & 1.208025 & 5.240775 & 0.860465 & 0.015152 \\
+GARCH(1,1) & benchmark\_garch\_family & 745 & 3.628230 & 1.407866 & 1.062958 & 1.036361 & 6.757529 & 0.866667 & 0.021477 \\
+ComboMean-PoolC\_GARCH\_CalibratedNeural & benchmark\_garch\_family & 726 & 3.608997 & 1.535241 & 1.063831 & 1.258349 & 5.035582 & 0.837209 & 0.013774 \\
+ARIMA-GARCH & benchmark\_garch\_family & 745 & 3.651122 & 1.414546 & 1.065995 & 1.032388 & 6.761726 & 0.866667 & 0.021477 \\
+ComboMedian-PoolC\_GARCH\_CalibratedNeural & benchmark\_garch\_family & 726 & 3.637627 & 1.537095 & 1.071273 & 1.257074 & 5.081737 & 0.837209 & 0.015152 \\
+Calibrated-LSTM-LogTarget-isotonic & neural\_or\_hybrid & 726 & 3.641386 & 1.666253 & 1.089682 & 1.383498 & 4.560720 & 0.837209 & 0.015152 \\
+ComboPair-BestRefitGARCH\_BestCalibratedNeural & benchmark\_garch\_family & 726 & 3.645308 & 1.586334 & 1.102204 & 1.296650 & 5.120981 & 0.883721 & 0.017906 \\
+Calibrated-Hybrid-QLIKE-isotonic & neural\_or\_hybrid & 726 & 3.663216 & 1.626102 & 1.103473 & 1.365598 & 4.738181 & 0.813953 & 0.015152 \\
+ComboPair-BestGARCHFamily\_BestCalibratedNeural & benchmark\_garch\_family & 726 & 3.656726 & 1.596697 & 1.109048 & 1.302005 & 5.127762 & 0.883721 & 0.017906 \\
+ComboStack-PoolC\_GARCH\_CalibratedNeural & benchmark\_garch\_family & 726 & 3.657768 & 1.615610 & 1.109833 & 1.339270 & 4.898244 & 0.860465 & 0.013774 \\
+Calibrated-LSTM-LogTarget-scale\_mean & neural\_or\_hybrid & 726 & 3.660321 & 1.659648 & 1.117144 & 1.373533 & 4.642764 & 0.860465 & 0.013774 \\
+Calibrated-Hybrid-LogTarget-Small-isotonic & neural\_or\_hybrid & 726 & 3.666914 & 1.619575 & 1.118671 & 1.325679 & 5.086723 & 0.883721 & 0.016529 \\
+Calibrated-LSTM-LogTarget-affine\_nonnegative & neural\_or\_hybrid & 726 & 3.664198 & 1.680312 & 1.124598 & 1.397616 & 4.593081 & 0.837209 & 0.013774 \\
+Calibrated-LSTM-LogTarget-scale\_qlike & neural\_or\_hybrid & 726 & 3.662647 & 1.684011 & 1.124750 & 1.403516 & 4.579964 & 0.837209 & 0.013774 \\
+Calibrated-LSTM-isotonic & neural\_or\_hybrid & 726 & 3.728790 & 1.592651 & 1.125124 & 1.250239 & 5.195352 & 0.906977 & 0.015152 \\
+Calibrated-ARIMA-GARCH-LSTM-isotonic & benchmark\_garch\_family & 726 & 3.685044 & 1.580444 & 1.126171 & 1.250861 & 5.176771 & 0.930233 & 0.015152 \\
+Calibrated-Hybrid-LogTarget-Small-scale\_qlike & neural\_or\_hybrid & 726 & 3.703774 & 1.650614 & 1.129128 & 1.348484 & 4.897987 & 0.883721 & 0.013774 \\
+Calibrated-Hybrid-LogTarget-Small-affine\_nonnegative & neural\_or\_hybrid & 726 & 3.704612 & 1.658256 & 1.131282 & 1.357839 & 4.875524 & 0.883721 & 0.013774 \\
+Calibrated-Hybrid-LogTarget-Small-scale\_mean & neural\_or\_hybrid & 726 & 3.706516 & 1.674496 & 1.135898 & 1.377635 & 4.829148 & 0.883721 & 0.013774 \\
+Calibrated-LSTM-QLIKE-isotonic & neural\_or\_hybrid & 726 & 3.702190 & 1.664831 & 1.137300 & 1.357354 & 4.780353 & 0.883721 & 0.013774 \\
+LSTM & neural\_or\_hybrid & 726 & 3.769716 & 1.639734 & 1.161001 & 1.294309 & 5.099184 & 0.930233 & 0.015152 \\
+Calibrated-Hybrid-LogTarget-affine\_nonnegative & neural\_or\_hybrid & 726 & 3.719332 & 1.793118 & 1.167361 & 1.525135 & 4.374252 & 0.883721 & 0.013774 \\
+\hline
+\end{tabular}

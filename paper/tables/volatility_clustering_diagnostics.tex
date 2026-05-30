@@ -1,0 +1,21 @@
+\begin{table}[!t]
+\centering
+\caption{Return-dependence and ARCH-effect diagnostics.}
+\label{tab:volatility-clustering-diagnostics}
+\scriptsize
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Test & Series & Lag & Statistic & \(p\)-value \\
+\midrule
+Ljung-Box & returns & 5 & 41.839 & 6.35e-08 \\
+Ljung-Box & returns & 10 & 49.343 & 3.52e-07 \\
+Ljung-Box & returns & 20 & 60.711 & 5.53e-06 \\
+Ljung-Box & squared\_returns & 5 & 794.846 & 1.51e-169 \\
+Ljung-Box & squared\_returns & 10 & 994.918 & 2.33e-207 \\
+Ljung-Box & squared\_returns & 20 & 1081.398 & 1.67e-216 \\
+ARCH-LM & demeaned\_returns & 5 & 455.264 & 3.6e-96 \\
+ARCH-LM & demeaned\_returns & 10 & 480.760 & 5.69e-97 \\
+ARCH-LM & demeaned\_returns & 20 & 496.552 & 1.53e-92 \\
+\bottomrule
+\end{tabular}
+\end{table}
