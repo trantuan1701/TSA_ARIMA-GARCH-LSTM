@@ -1,0 +1,12 @@
+check,status,detail
+train_target_date_after_origin,pass,rows=2471
+validation_target_date_after_origin,pass,rows=750
+test_target_date_after_origin,pass,rows=745
+target_var_next_equals_next_squared_return,pass,
+rolling_vol_5_trailing_only_formula,pass,pandas rolling(window).std() matches checked-in feature
+rolling_vol_10_trailing_only_formula,pass,pandas rolling(window).std() matches checked-in feature
+rolling_vol_20_trailing_only_formula,pass,pandas rolling(window).std() matches checked-in feature
+lstm_scaler_imputer_fit_scope,pass_by_code_audit,src/train_lstm_hybrid.py fits imputer/scaler on train then applies to validation/test.
+lstm_sequences_do_not_cross_split_boundaries,pass_by_code_audit,"create_sequences is called separately for train, validation, and test splits."
+qlike_epsilon_consistency,pass,Shared EPSILON imported from src/metrics.py = 1e-08.
+forbidden_predictive_columns,pass_by_code_audit,"target_var_next, target_date, date, and split are excluded from LSTM feature lists."

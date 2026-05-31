@@ -1,7 +1,6 @@
 # Reproducibility Notes
 
-This project forecasts one-step-ahead VN-Index volatility using daily CafeF OHLC data.
-The primary target is next-day squared percentage log return:
+This project forecasts one-step-ahead VN-Index volatility using daily CafeF OHLC data. The primary target is next-day squared percentage log return:
 
 ```text
 log_return_pct = 100 * log(close_t / close_{t-1})
@@ -9,81 +8,87 @@ squared_return = log_return_pct ** 2
 target_var_next = squared_return.shift(-1)
 ```
 
+## Repository And Data Availability
+
+- Git repository: yes.
+- Verified branch: `master`.
+- Verified remote: `https://github.com/trantuan1701/TSA_ARIMA-GARCH-LSTM.git`.
+- Remote reachability was checked with `git ls-remote origin master`.
+- Release snapshot: use the commit or tag that contains the packaged root `paper.pdf`, the rewritten root `README.md`, and `outputs/artifact_manifest.csv`.
+- Raw CafeF data are present locally under `data/raw/`, but no redistribution license was found in this repository. If this work is published publicly, add a data-license statement or replace raw redistribution with download/preprocessing instructions.
+
 ## Environment
 
-Install the checked-in dependency set from the repository root:
+Use Python 3.13.11 or a compatible Python 3.10+ environment. The verified package set is pinned in `requirements.txt`:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-The current regenerated final artifacts were verified with Python 3.13.11 and:
+Verified versions include pandas 3.0.2, numpy 2.4.4, statsmodels 0.14.6, arch 8.0.0, TensorFlow 2.21.0, scipy 1.17.1, pyarrow 24.0.0, scikit-learn 1.8.0, and pytest 9.0.3.
 
-```text
-pandas 3.0.2
-numpy 2.4.4
-matplotlib 3.10.9
-statsmodels 0.14.6
-arch 8.0.0
-tensorflow 2.21.0
-scipy 1.17.1
-pyarrow 24.0.0
-pytest 9.0.3
-```
+## Seeds And Determinism
 
-## Canonical Commands
+- Base and tuned neural scripts use seed `42`.
+- Set through `VNINDEX_RANDOM_SEED=42`; scripts also set Python, NumPy, and TensorFlow seeds.
+- TensorFlow deterministic options are enabled where available: `TF_DETERMINISTIC_OPS=1` and `TF_ENABLE_ONEDNN_OPTS=0`.
+- CPU TensorFlow may still emit hardware warnings; regenerated predictions are versioned as artifacts.
 
-Regenerate the original data/model/evaluation pipeline:
+## Reproduction Commands
+
+Baseline data/model pipeline:
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python run_experiment.py --skip-paper
 ```
 
-Regenerate extension and final empirical artifacts:
+Advanced and final econometric artifacts:
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python src/stage1_extensions.py all
 PYTHONDONTWRITEBYTECODE=1 python src/final_financial_econometrics.py all
 ```
 
-Equivalent Make target for the final artifacts:
+Corrected-context neural regeneration:
 
 ```bash
-make final-artifacts
+make neural-corrected
+make advanced-corrected-combinations
 ```
 
-Run tests:
+Completion-pass VaR/ES, regime, dynamic-combination, and manifest artifacts:
+
+```bash
+make completion-artifacts
+```
+
+Full tests and manuscript build:
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 pytest -q
-```
-
-Compile the manuscript:
-
-```bash
+PYTHONDONTWRITEBYTECODE=1 make final-artifacts
 make -C paper all
 ```
 
+## Versioned Artifacts
+
+- Baseline archive: `outputs/archive/before_neural_var_es_dynamic_completion/`, `models/archive/before_neural_var_es_dynamic_completion/`, `paper/archive/before_neural_var_es_dynamic_completion/`.
+- Legacy neural archive: `outputs/neural_legacy_pre_context_fix/`, `models/neural_legacy_pre_context_fix/`.
+- Corrected neural outputs: `outputs/neural_corrected_context_v2/`.
+- Corrected neural-dependent calibration/combinations: `outputs/advanced_corrected_context_v2/`.
+- Final completion outputs: `outputs/final/`.
+
 ## Primary Evidence Files
 
-- `reports/repo_audit_financial_econometrics.md`
-- `outputs/final/common_window_master_results.csv`
-- `outputs/final/common_window_predictions.parquet`
-- `outputs/final/common_window_dm_tests.csv`
-- `outputs/final/common_window_var_backtests.csv`
-- `outputs/final/garch_parameter_diagnostics.csv`
-- `outputs/final/garch_residual_diagnostics.csv`
-- `outputs/final/refit_protocol_results.csv`
-- `outputs/final/daily_proxy_robustness_metrics.csv`
-- `outputs/audit/advanced_garch_failure_taxonomy.csv`
-- `paper/tables/common_window_master_results.tex`
-- `paper/tables/advanced_garch_failure_audit.tex`
-- `paper/tables/return_descriptive_statistics.tex`
-- `paper/tables/volatility_clustering_diagnostics.tex`
-- `paper/tables/garch_parameter_diagnostics.tex`
-- `paper/tables/garch_residual_diagnostics.tex`
-- `paper/tables/refit_protocol_results.tex`
-- `paper/tables/common_window_var_backtests.tex`
-- `paper/tables/common_window_spike_diagnostics.tex`
+- `outputs/final/primary_results_corrected_neural.csv`
+- `outputs/final/neural_retraining_comparison.csv`
+- `outputs/final/regime_spike_results_corrected_neural.csv`
+- `outputs/final/common_distribution_var_es_all_models.csv`
+- `outputs/final/model_specific_var_es_garch.csv`
+- `outputs/final/regime_aware_combination_results.csv`
+- `outputs/audit/refit_failure_taxonomy.csv`
+- `outputs/artifact_manifest.csv`
+- `outputs/artifact_manifest.json`
+- `paper.pdf`
 
-Use `outputs/final/common_window_master_results.csv` as the authoritative main leaderboard. Older available-window tables mix 726-row neural windows with 745-row econometric windows and should be treated as secondary or diagnostic.
+Use `outputs/final/primary_results_corrected_neural.csv` for the corrected-context primary leaderboard. The earlier `N=726` baseline remains archived and is used only as a comparability check.

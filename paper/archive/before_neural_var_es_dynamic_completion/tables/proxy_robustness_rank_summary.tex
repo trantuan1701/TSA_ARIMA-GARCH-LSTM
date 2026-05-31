@@ -1,0 +1,20 @@
+\begin{table*}[!t]
+\centering
+\caption{Stage 1 volatility-proxy robustness rank summary. Exact rankings change across close-to-close and range-based proxies, but asymmetric GARCH-family specifications remain robust top performers.}
+\label{tab:proxy-robustness}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}L{0.25\textwidth}r r r r L{0.24\textwidth}@{}}
+\toprule
+Model & Avg. QLIKE rank & Best & Worst & Top-5 proxies & Interpretation \\
+\midrule
+AdvGARCH-BestAsymmetric & \best{3.57} & 1 & 14 & 6/7 & Most stable top model; top-3 under 5/7 proxies \\
+AdvGARCH-BestHeavyTail & 4.71 & 2 & 15 & 5/7 & Robust top model, but not a top-1 proxy winner \\
+AdvGARCH-BestQLIKE & 5.14 & 3 & 11 & 5/7 & Primary validation-selected GARCH-family model remains robust \\
+GARCH(1,1) & 7.71 & 2 & 16 & 2/7 & Strong benchmark, not consistently top-tier under range proxies \\
+EWMA(\(\lambda=0.90\)) & 13.14 & 1 & 58 & 3/7 & Useful industry baseline, but proxy stability is weaker \\
+HAR-Parkinson & 15.14 & 7 & 22 & 0/7 & Strong main-target benchmark, less stable across generated proxies \\
+BestGARCHFamily + HybridQLIKE pair & 16.71 & 1 & 20 & 1/7 & Best close-to-close result, but proxy-sensitive \\
+\bottomrule
+\end{tabular}
+\end{table*}

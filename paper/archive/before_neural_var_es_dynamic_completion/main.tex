@@ -1,0 +1,53 @@
+\RequirePackage[T1]{fontenc}
+\documentclass[conference]{IEEEtran}
+
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{balance}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{url}
+
+\graphicspath{{figures/}}
+\interdisplaylinepenalty=2500
+\setlength{\floatsep}{6pt plus 1pt minus 2pt}
+\setlength{\textfloatsep}{8pt plus 1pt minus 2pt}
+\setlength{\dblfloatsep}{6pt plus 1pt minus 2pt}
+\setlength{\dbltextfloatsep}{8pt plus 1pt minus 2pt}
+\hyphenation{ARIMA GARCH EGARCH FIGARCH APARCH LSTM HistoricalMean RollingVol}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\best}[1]{\textbf{#1}}
+\newcommand{\takeaway}[1]{\textbf{#1}}
+
+\begin{document}
+
+\title{Modeling and Forecasting VN-Index Volatility: A Financial Econometric Evaluation of GARCH-Family, HAR, Neural, and Hybrid Approaches}
+
+\author{
+\IEEEauthorblockN{Tran Anh Tuan - 1120399 - DSEB 65B - NEU}
+\IEEEauthorblockA{Course: Time Series}
+}
+
+\maketitle
+
+\begin{abstract}
+This paper studies one-step-ahead daily VN-Index volatility forecasting using CafeF OHLC and trading-activity data. The target is next-day squared percentage log return, and all primary forecasts are evaluated on a unified out-of-sample window of 726 common target dates from 2023-02-07 to 2025-12-31. The study compares historical and rolling variance baselines, EWMA/RiskMetrics, HAR-type models, GARCH(1,1), ARIMA-GARCH, validation-selected GARCH-family specifications, LSTM, hybrid neural forecasts, calibration, and forecast combinations. Descriptive diagnostics show negatively skewed, heavy-tailed returns, and ARCH-LM tests strongly reject homoskedasticity, motivating conditional-variance models. On the corrected common window, AdvGARCH-BestAsymmetric obtains QLIKE 1.0214, the primary validation-selected AdvGARCH-BestQLIKE obtains 1.0229, HAR-Parkinson obtains 1.0294, and GARCH(1,1) obtains 1.0529. The evidence supports a conservative class-level conclusion: selected GARCH-family specifications and HAR-Parkinson form the strongest group, while the implemented neural and hybrid approaches do not robustly outperform these econometric benchmarks in this modest daily-data setting. Risk diagnostics qualify the average-loss ranking. Under a common-Normal variance-to-VaR mapping, GARCH(1,1) has 15 one-percent violations out of 726 observations, against 7.26 expected, with Kupiec \(p=0.0116\). Thus good QLIKE does not by itself guarantee strict-tail calibration.
+\end{abstract}
+
+\begin{IEEEkeywords}
+VN-Index, volatility forecasting, GARCH, EGARCH, LSTM, hybrid forecasting, QLIKE, VaR backtesting, range-based volatility.
+\end{IEEEkeywords}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_methodology}
+\input{sections/04_experimental_setup}
+\input{sections/05_results_and_discussion}
+\input{sections/06_conclusion}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

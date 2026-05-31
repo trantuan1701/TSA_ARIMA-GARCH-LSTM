@@ -1,0 +1,26 @@
+\begin{table*}[!t]
+\centering
+\caption{Common-Normal zero-mean VaR and ES diagnostics for selected models.}
+\label{tab:common-distribution-var-es-main}
+\scriptsize
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+model & alpha & n\_obs & var\_violations & expected\_violations & kupiec\_uc\_p\_value & christoffersen\_cc\_p\_value & quantile\_loss \\
+\midrule
+HAR-Parkinson & 0.025 & 745 & 17 & 18.62 & 0.699 & 0.623 & 0.090158 \\
+RegimeAwareCombo-Vol20Q75 & 0.025 & 745 & 17 & 18.62 & 0.699 & 0.623 & 0.092862 \\
+GARCH(1,1) & 0.025 & 745 & 22 & 18.62 & 0.441 & 0.682 & 0.092134 \\
+LSTM & 0.025 & 745 & 15 & 18.62 & 0.379 & 0.399 & 0.096181 \\
+AdvGARCH-BestAsymmetric & 0.025 & 745 & 24 & 18.62 & 0.227 & 0.467 & 0.090424 \\
+AdvGARCH-BestQLIKE & 0.025 & 745 & 24 & 18.62 & 0.227 & 0.467 & 0.090618 \\
+ARIMA-GARCH-LSTM & 0.025 & 745 & 13 & 18.62 & 0.163 & 0.3 & 0.096234 \\
+GARCH(1,1) & 0.050 & 745 & 35 & 37.25 & 0.703 & 0.792 & 0.140396 \\
+AdvGARCH-BestAsymmetric & 0.050 & 745 & 34 & 37.25 & 0.579 & 0.759 & 0.138450 \\
+AdvGARCH-BestQLIKE & 0.050 & 745 & 34 & 37.25 & 0.579 & 0.759 & 0.138440 \\
+HAR-Parkinson & 0.050 & 745 & 33 & 37.25 & 0.467 & 0.383 & 0.138978 \\
+RegimeAwareCombo-Vol20Q75 & 0.050 & 745 & 23 & 37.25 & 0.0102 & 0.0348 & 0.143732 \\
+LSTM & 0.050 & 745 & 22 & 37.25 & 0.00566 & 0.02 & 0.149397 \\
+ARIMA-GARCH-LSTM & 0.050 & 745 & 20 & 37.25 & 0.00153 & 0.00184 & 0.150913 \\
+\bottomrule
+\end{tabular}
+\end{table*}

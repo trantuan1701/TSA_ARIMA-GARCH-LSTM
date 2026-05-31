@@ -4,16 +4,20 @@
 
 \input{tables/common_window_master_results}
 
-Table~\ref{tab:common-window-master} is the authoritative primary leaderboard. Every listed model is evaluated on the same 726 target dates from 2023-02-07 to 2025-12-31 and the same next-day squared percentage log-return target. This resolves the earlier artifact mismatch between available-window econometric outputs and shorter neural sequence outputs.
+Table~\ref{tab:common-window-master} is the authoritative primary leaderboard after corrected-context neural retraining. Every listed model is evaluated on the same 745 target dates from 2023-01-04 to 2025-12-31 and the same next-day squared percentage log-return target. The earlier 726-date window is retained only as a legacy comparability check because it was driven by pre-correction neural sequence coverage.
 
-The strongest group consists of selected GARCH-family specifications and HAR-Parkinson. AdvGARCH-BestAsymmetric has the lowest common-window QLIKE, 1.021413, but it is a category-selected asymmetric comparator. The primary validation-selected advanced model, AdvGARCH-BestQLIKE, is very close at 1.022898. HAR-Parkinson follows with QLIKE 1.029373, ahead of HAR-SquaredReturn at 1.039364, GARCH(1,1) at 1.052888, and ARIMA-GARCH at 1.055679.
+The strongest group still consists of selected GARCH-family specifications and HAR-Parkinson. AdvGARCH-BestAsymmetric has the lowest corrected-window QLIKE, 1.029992, but it is a category-selected asymmetric comparator. The primary validation-selected advanced model, AdvGARCH-BestQLIKE, is very close at 1.032548. HAR-Parkinson follows with QLIKE 1.034521, ahead of HAR-SquaredReturn at 1.047975, GARCH(1,1) at 1.062958, and ARIMA-GARCH at 1.065995.
 
-The neural and hybrid models do not robustly improve on these econometric benchmarks. The base LSTM has QLIKE 1.161001 and the ARIMA-GARCH-LSTM has QLIKE 1.168609. The best validation-selected calibrated neural forecast in the primary inventory improves to 1.118671, but remains behind the strongest GARCH-family and HAR forecasts. This is not evidence that neural volatility models generally fail; it shows that the implemented neural and hybrid specifications do not dominate in this daily VN-Index setting.
+The corrected neural and hybrid models do not robustly improve on these econometric benchmarks. The base LSTM has QLIKE 1.163862 and the ARIMA-GARCH-LSTM has QLIKE 1.172986. The best validation-selected calibrated neural forecast in the primary inventory improves to 1.126931, but remains behind the strongest GARCH-family and HAR forecasts. This is not evidence that neural volatility models generally fail; it shows that the implemented neural and hybrid specifications do not dominate on average QLIKE in this daily VN-Index setting.
+
+\input{tables/neural_retraining_comparison}
+
+Table~\ref{tab:neural-retraining-comparison} documents the artifact change directly. Corrected-context neural predictions recover the first 19 test origins that were absent from the legacy sequence-local artifacts. The corrected neural QLIKE values are close to, but not materially better than, the legacy-window values, so the main conclusion does not depend on the sequence-coverage correction.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{fig_common_window_master_qlike.png}
-\caption{Primary common-window QLIKE for the verified 726-observation leaderboard. Lower is better.}
+\caption{Primary common-window QLIKE for the corrected 745-observation leaderboard. Lower is better.}
 \label{fig:common-window-master-qlike}
 \end{figure}
 
@@ -37,11 +41,13 @@ The common-window Diebold-Mariano outputs are intentionally interpreted conserva
 
 \input{tables/refit_protocol_results}
 
-Table~\ref{tab:refit-protocol-results} compares static train-only forecasts with expanding-window monthly refits for the small preselected econometric set. The conclusion largely survives. AdvGARCH-BestAsymmetric remains the best complete-window refit model, improving from static QLIKE 1.021413 to expanding-monthly QLIKE 1.014849. GARCH(1,1) improves from 1.052888 to 1.047945, and ARIMA-GARCH improves from 1.055679 to 1.049005. HAR-Parkinson remains stable, with essentially unchanged QLIKE around 1.03.
+Table~\ref{tab:refit-protocol-results} compares static train-only forecasts with expanding-window monthly refits for the small preselected econometric set on the expanded common window. The conclusion largely survives. AdvGARCH-BestAsymmetric remains the best complete-window refit model, improving from static QLIKE 1.029992 to expanding-monthly QLIKE 1.023691. GARCH(1,1) improves from 1.062958 to 1.057908, and ARIMA-GARCH improves from 1.065995 to 1.059182. HAR-Parkinson remains stable, with QLIKE around 1.035.
 
-The robustness experiment also reveals operational fragility. AdvGARCH-BestQLIKE is the primary validation-selected advanced specification in the static protocol, but its monthly expanding refit fails in 19 monthly segments and only produces 340 common-window forecasts. That incomplete refit has QLIKE 1.202280 and is marked as not covering the full common window. This does not invalidate the static primary result, but it weakens the practical attractiveness of using that ARIMA-EGARCH specification in a monthly operational refit setting.
+The robustness experiment also reveals operational fragility. AdvGARCH-BestQLIKE is the primary validation-selected advanced specification in the static protocol, but its monthly expanding refit fails in 20 monthly segments on the expanded window and only produces 340 forecasts. The old 726-date baseline had 19 failed segments; the corrected 745-date window adds a failed January 2023 segment. The incomplete refit has QLIKE 1.202280 and is marked as not covering the full common window. This does not invalidate the static primary result, but it weakens the practical attractiveness of using that ARIMA-EGARCH specification in a monthly operational refit setting.
 
-Periodic updating improves some complete econometric forecasts and reduces the one-percent common-Normal VaR violation count for several models. For example, GARCH(1,1) declines from 15 to 14 one-percent violations after monthly refitting, while AdvGARCH-BestAsymmetric declines from 14 to 13. The changes are useful but do not remove the need for tail-risk diagnostics.
+\input{tables/refit_failure_taxonomy}
+
+Periodic updating improves some complete econometric forecasts and reduces the one-percent common-Normal VaR violation count for several models. For example, GARCH(1,1) declines from 16 to 15 one-percent violations after monthly refitting, while AdvGARCH-BestAsymmetric declines from 15 to 14. The changes are useful but do not remove the need for tail-risk diagnostics.
 
 \begin{figure}[!t]
 \centering
@@ -50,17 +56,25 @@ Periodic updating improves some complete econometric forecasts and reduces the o
 \label{fig:refit-protocol-qlike}
 \end{figure}
 
-\subsection{Spike and VaR Diagnostics}
+\subsection{Spike, VaR, and ES Diagnostics}
 
-\input{tables/common_window_spike_diagnostics}
+\input{tables/regime_spike_results_corrected_neural}
 
-Average QLIKE hides a common risk weakness. Table~\ref{tab:common-window-spike-diagnostics} evaluates days above the 90th percentile of actual variance. The strongest econometric models still underpredict most spike days, and severe underprediction rates remain high. HAR-Parkinson has the best spike-day QLIKE among the primary econometric models in the table, but it still severely underpredicts about three quarters of spike days. Spike diagnostics therefore qualify rather than overturn the average-loss ranking.
+Average QLIKE hides a common risk weakness. Table~\ref{tab:regime-spike-corrected-neural} evaluates calm, high-volatility, and spike days using train/validation actual-variance thresholds. The strongest econometric models still underpredict most spike days, and severe underprediction rates remain high. HAR-Parkinson has spike-day QLIKE 8.821, while AdvGARCH-BestAsymmetric has 9.366. Corrected neural-dependent forecasts are not better overall, but some are better on spike-day QLIKE: ComboStack-PoolD\_AllStable has 6.406 and ARIMA-GARCH-LSTM has 6.533. This supports a limited complementarity interpretation rather than a claim of neural dominance.
 
-\input{tables/common_window_var_backtests}
+\input{tables/common_distribution_var_es_main}
 
-Table~\ref{tab:common-window-var-backtests} maps variance forecasts to VaR using a common Normal quantile. At the 5\% level, the main econometric models have violation counts near expectation. At the 1\% level, strict-tail coverage is weaker. GARCH(1,1) has 15 violations out of 726 observations against 7.26 expected, with Kupiec \(p=0.0116\). AdvGARCH-BestQLIKE and AdvGARCH-BestAsymmetric each have 14 violations, with Kupiec \(p=0.0258\). These results show that good average volatility forecasts do not automatically deliver adequate extreme-risk calibration under the common-Normal mapping.
+Table~\ref{tab:common-distribution-var-es-main} maps variance forecasts to VaR and ES using a common zero-mean Normal lower-tail return distribution. At the 5\% and 2.5\% levels, several econometric models have violation counts close to expectation. At the 1\% level, strict-tail coverage is weaker and the expected count is only 7.45 observations. GARCH(1,1) has 16 one-percent violations with Kupiec \(p=0.0063\), while AdvGARCH-BestQLIKE and AdvGARCH-BestAsymmetric each have 15 with Kupiec \(p=0.0145\). For this sample size, 5\% and 2.5\% are more informative for inference; 1\% is treated as supplementary strict-tail evidence.
 
-This is a standardized risk translation, not a full distribution-specific VaR evaluation. Heavy-tailed or skewed GARCH models may require model-specific quantiles, but the current primary prediction artifacts do not retain all fitted tail-shape and skew parameters needed for a clean distribution-specific comparison.
+\input{tables/model_specific_var_es_garch}
+
+Table~\ref{tab:model-specific-var-es-garch} adds a model-specific risk layer for selected GARCH-family models with verified Normal innovations. Because these selected specifications are Normal, their distribution-specific quantiles match the common-Normal zero-mean mapping. The validation-selected GED heavy-tail comparator is audited but not used for formal ES because GED ES parameter extraction and formula implementation were not verified in this pass.
+
+\subsection{Regime-Aware Dynamic Combination}
+
+\input{tables/regime_aware_combination_results}
+
+The regime-aware combination is a controlled novelty extension, not a new model-search universe. The econometric expert and neural expert are selected by validation QLIKE, the regime indicator is origin-observable trailing 20-day volatility, the threshold grid is selected on validation data only, and low/high-regime weights are frozen before test evaluation. The selected design uses HAR-Parkinson and Calibrated-Hybrid-LogTarget-Small-isotonic, with a 75th-percentile validation threshold. It assigns econometric/neural weights of 0.45/0.55 in low regimes and 0.00/1.00 in high regimes. The regime-aware test QLIKE is 1.064346, better than the static convex combination at 1.077023 and close to GARCH(1,1), but still behind AdvGARCH-BestAsymmetric, AdvGARCH-BestQLIKE, and HAR-Parkinson overall. Its main contribution is spike behavior: spike-day QLIKE improves to 7.350. The result is useful as validation-safe evidence of high-volatility complementarity, not as a new primary winner.
 
 \subsection{Proxy Robustness}
 
@@ -77,7 +91,7 @@ The proxy robustness exercise confirms that exact rankings are sensitive to how 
 
 The empirical findings are economically coherent. Raw VN-Index returns are heavy-tailed and negatively skewed, while squared returns exhibit strong dependence. GARCH-family models perform well because they encode this persistence directly. HAR-Parkinson performs competitively because daily range information carries volatility information that close-to-close squared returns alone may miss.
 
-The neural and hybrid findings are best interpreted as modest and dataset-specific. Daily sample size is limited for deep sequence models, and smooth neural forecasts can look acceptable under some average losses while missing spike timing or tail risk. Calibration and combinations can improve scale, but the implemented neural and hybrid approaches do not provide robust superiority over the strongest econometric benchmarks.
+The neural and hybrid findings are best interpreted as modest and dataset-specific. Daily sample size is limited for deep sequence models, and smooth neural forecasts can look acceptable under some average losses while missing spike timing or tail risk. After corrected-context retraining, calibration and combinations can improve scale and spike behavior, but the implemented neural and hybrid approaches do not provide robust average-loss superiority over the strongest econometric benchmarks.
 
 \section{Limitations}
 
@@ -85,4 +99,6 @@ The study uses daily data only and lacks high-frequency realized volatility. Squ
 
 The advanced GARCH search is broad and numerically fragile. Although the static validation-selected models are useful, the refit experiment shows that AdvGARCH-BestQLIKE is not operationally stable under monthly expanding refits. The asymmetric comparator performs well, but it remains a category-selected robustness model rather than the sole primary winner.
 
-Distribution-specific VaR is not implemented in the final evidence because the prediction artifacts do not cleanly retain all innovation distribution parameters. Neural sequence construction has been corrected in code, but full retraining into versioned output paths was not performed in the final pass. This does not affect the fairness of the primary leaderboard, because all primary models are compared on the same 726 target dates.
+Distribution-specific VaR/ES is implemented only for selected Normal GARCH-family models. GED and skewed-\(t\) ES are omitted because parameter extraction and ES formulas were not verified. Neural sequence construction was corrected and retrained into versioned output paths, but only a single deterministic seed was used for the full regenerated neural set. Random-initialization robustness therefore remains a limitation.
+
+The dynamic-combination extension is deliberately small. Its validation-frozen regime-aware version improves spike behavior and beats the static combination, but it does not dominate the best econometric forecasts on overall QLIKE. It should therefore be read as a controlled robustness extension rather than a new primary forecasting model.

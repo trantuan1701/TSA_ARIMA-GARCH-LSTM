@@ -89,10 +89,30 @@ OUTPUT_AUDIT_DIR = PROJECT_ROOT / "outputs" / "audit"
 REPORTS_DIR = PROJECT_ROOT / "reports"
 PAPER_TABLES_DIR = PROJECT_ROOT / "paper" / "tables"
 PAPER_FIGURES_DIR = PROJECT_ROOT / "paper" / "figures"
+CORRECTED_NEURAL_ROOT = PROJECT_ROOT / "outputs" / "neural_corrected_context_v2"
+CORRECTED_ADVANCED_DIR = PROJECT_ROOT / "outputs" / "advanced_corrected_context_v2"
 
 PREDICTION_COLUMNS = ["date", "target_date", "actual_var", "pred_var", "model", "split"]
 DATE_COLUMNS = ["date", "target_date"]
 TARGET_PROXY = "next_day_squared_percentage_log_return"
+
+
+def preferred_existing_path(preferred: Path, fallback: Path) -> Path:
+    return preferred if preferred.exists() else fallback
+
+
+def neural_artifact_path(*parts: str) -> Path:
+    return preferred_existing_path(
+        CORRECTED_NEURAL_ROOT.joinpath(*parts),
+        PROJECT_ROOT / "outputs" / Path(*parts),
+    )
+
+
+def corrected_advanced_artifact_path(*parts: str) -> Path:
+    return preferred_existing_path(
+        CORRECTED_ADVANCED_DIR.joinpath(*parts),
+        PROJECT_ROOT / "outputs" / "advanced" / Path(*parts),
+    )
 
 PRIMARY_STATIC_SPECS = [
     (
@@ -148,17 +168,17 @@ PRIMARY_STATIC_SPECS = [
     (
         "LSTM",
         "validation_monitored_neural_baseline",
-        PROJECT_ROOT / "outputs" / "predictions" / "pred_lstm_base.csv",
+        neural_artifact_path("predictions", "pred_lstm_base.csv"),
     ),
     (
         "ARIMA-GARCH-LSTM",
         "validation_monitored_hybrid_neural_baseline",
-        PROJECT_ROOT / "outputs" / "predictions" / "pred_lstm_hybrid.csv",
+        neural_artifact_path("predictions", "pred_lstm_hybrid.csv"),
     ),
     (
         "Hybrid-QLIKE",
         "validation_selected_tuned_hybrid_neural",
-        PROJECT_ROOT / "outputs" / "predictions" / "lstm_tuned" / "pred_hybrid_qlike.csv",
+        neural_artifact_path("predictions", "lstm_tuned", "pred_hybrid_qlike.csv"),
     ),
     (
         "EWMA(lambda=0.90)",
@@ -306,8 +326,8 @@ def build_har_squared_return_predictions() -> pd.DataFrame:
 
 
 def selected_calibrated_neural_spec() -> tuple[ModelSpec | None, pd.DataFrame | None]:
-    validation_path = PROJECT_ROOT / "outputs" / "advanced" / "tables" / "table_neural_calibration_validation.csv"
-    files_path = PROJECT_ROOT / "outputs" / "advanced" / "tables" / "table_neural_calibration_prediction_files.csv"
+    validation_path = corrected_advanced_artifact_path("tables", "table_neural_calibration_validation.csv")
+    files_path = corrected_advanced_artifact_path("tables", "table_neural_calibration_prediction_files.csv")
     if not validation_path.exists() or not files_path.exists():
         return None, None
     validation = read_csv(validation_path)
@@ -321,7 +341,10 @@ def selected_calibrated_neural_spec() -> tuple[ModelSpec | None, pd.DataFrame | 
     file_row = files[files["model"].astype(str).eq(model)]
     if file_row.empty:
         return None, None
-    path = PROJECT_ROOT / str(file_row.iloc[0]["prediction_file"])
+    prediction_file = str(file_row.iloc[0]["prediction_file"])
+    if prediction_file.startswith("outputs/advanced/") and CORRECTED_ADVANCED_DIR.exists():
+        prediction_file = prediction_file.replace("outputs/advanced", "outputs/advanced_corrected_context_v2", 1)
+    path = PROJECT_ROOT / prediction_file
     if not path.exists():
         return None, None
     spec = ModelSpec(
@@ -333,7 +356,7 @@ def selected_calibrated_neural_spec() -> tuple[ModelSpec | None, pd.DataFrame | 
 
 
 def selected_combination_spec() -> tuple[ModelSpec | None, pd.DataFrame | None]:
-    validation_path = PROJECT_ROOT / "outputs" / "advanced" / "tables" / "table_forecast_combination_validation.csv"
+    validation_path = corrected_advanced_artifact_path("tables", "table_forecast_combination_validation.csv")
     if not validation_path.exists():
         return None, None
     validation = read_csv(validation_path)
@@ -343,7 +366,7 @@ def selected_combination_spec() -> tuple[ModelSpec | None, pd.DataFrame | None]:
     chosen = validation.sort_values(["QLIKE", "RMSE", "model"]).iloc[0]
     model = str(chosen["model"])
     path = find_prediction_for_model(
-        PROJECT_ROOT / "outputs" / "advanced" / "predictions" / "forecast_combinations",
+        corrected_advanced_artifact_path("predictions", "forecast_combinations"),
         model,
     )
     if path is None:
@@ -488,6 +511,21 @@ def latex_escape(value: object) -> str:
 
 
 def write_master_results_latex(master: pd.DataFrame, path: Path) -> None:
+    role_labels = {
+        "fixed_baseline": "Fixed baseline",
+        "training_selected_econometric_benchmark": "Canonical GARCH",
+        "training_aic_mean_model_plus_garch_benchmark": "AIC ARIMA-GARCH",
+        "validation_selected_primary_advanced_garch": "Validation AdvGARCH",
+        "validation_selected_asymmetric_garch_comparator": "Asymmetric comparator",
+        "validation_monitored_neural_baseline": "Neural baseline",
+        "validation_monitored_hybrid_neural_baseline": "Hybrid baseline",
+        "validation_selected_tuned_hybrid_neural": "Tuned hybrid",
+        "validation_selected_ewma": "Validation EWMA",
+        "validation_selected_har": "Validation HAR",
+        "predeclared_har_comparator": "HAR comparator",
+        "validation_selected_calibrated_neural": "Calibrated neural",
+        "validation_selected_forecast_combination": "Validation combo",
+    }
     display = master[
         [
             "rank_qlike",
@@ -512,10 +550,13 @@ def write_master_results_latex(master: pd.DataFrame, path: Path) -> None:
             "pred_actual_ratio": "Pred./Actual",
         }
     )
+    display["Selection role"] = display["Selection role"].map(lambda value: role_labels.get(str(value), str(value)))
+    target_start = str(master["target_date_start"].iloc[0])
+    target_end = str(master["target_date_end"].iloc[0])
     lines = [
         r"\begin{table*}[!t]",
         r"\centering",
-        r"\caption{Primary common-window test results. All models use target dates 2023-02-07 to 2025-12-31 and the same next-day squared percentage log-return target.}",
+        rf"\caption{{Primary common-window test results. All models use target dates {target_start} to {target_end} and the same next-day squared percentage log-return target. Selection roles are shortened; full provenance is in \texttt{{outputs/final/primary\_model\_inventory.csv}}.}}",
         r"\label{tab:common-window-master}",
         r"\scriptsize",
         r"\setlength{\tabcolsep}{4pt}",
@@ -1875,14 +1916,22 @@ def write_refit_latex(results: pd.DataFrame, path: Path) -> None:
         r"Model & Protocol & \(N\) & Full & QLIKE & RMSE & MAE & Pred./Actual & Q90 QLIKE & Failed \\",
         r"\midrule",
     ]
-    for _, row in display.sort_values(["model", "protocol"]).iterrows():
-        lines.append(
-            f"{latex_escape(row['model'])} & {latex_escape(row['protocol'])} & {int(row['n_obs'])} & "
-            f"{'yes' if bool(row['complete_common_window']) else 'no'} & "
-            f"{float(row['qlike']):.6f} & {float(row['rmse']):.6f} & {float(row['mae']):.6f} & "
-            f"{float(row['pred_actual_ratio']):.3f} & {float(row['extreme_q90_qlike']):.3f} & "
-            f"{int(row['failed_refits'])} " + r"\\"
-        )
+    panels = [
+        ("Panel A: complete-window protocols", display[display["complete_common_window"].astype(bool)]),
+        ("Panel B: incomplete operational refits", display[~display["complete_common_window"].astype(bool)]),
+    ]
+    for panel_title, panel in panels:
+        if panel.empty:
+            continue
+        lines.append(rf"\multicolumn{{10}}{{@{{}}l}}{{\textit{{{latex_escape(panel_title)}}}}} \\")
+        for _, row in panel.sort_values(["model", "protocol"]).iterrows():
+            lines.append(
+                f"{latex_escape(row['model'])} & {latex_escape(row['protocol'])} & {int(row['n_obs'])} & "
+                f"{'yes' if bool(row['complete_common_window']) else 'no'} & "
+                f"{float(row['qlike']):.6f} & {float(row['rmse']):.6f} & {float(row['mae']):.6f} & "
+                f"{float(row['pred_actual_ratio']):.3f} & {float(row['extreme_q90_qlike']):.3f} & "
+                f"{int(row['failed_refits'])} " + r"\\"
+            )
     lines.extend([r"\bottomrule", r"\end{tabular}", r"\end{table*}"])
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 

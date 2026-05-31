@@ -1,0 +1,25 @@
+\begin{table*}[!t]
+\centering
+\caption{Extended common-Normal VaR backtesting. GARCH(1,1) looks well calibrated at 5\%, but the stricter 1\% tail rejects unconditional coverage, showing why risk diagnostics must go beyond average QLIKE.}
+\label{tab:var-backtests}
+\scriptsize
+\renewcommand{\arraystretch}{0.95}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}L{0.22\textwidth}c r r r r r r L{0.20\textwidth}@{}}
+\toprule
+Model & VaR & \(N\) & Viol. & Exp. & Kupiec \(p\) & Indep. \(p\) & CC \(p\) & Interpretation \\
+\midrule
+GARCH(1,1) & 5\% & 745 & 35 & 37.25 & 0.7025 & 0.5709 & 0.7917 & No 5\% rejection \\
+GARCH(1,1) & 2.5\% & 745 & 22 & 18.63 & 0.4411 & 0.6778 & 0.6818 & No 5\% rejection \\
+GARCH(1,1) & 1\% & 745 & \best{16} & 7.45 & \best{0.00631} & 0.4017 & 0.0169 & Rejects unconditional coverage \\
+HAR-Parkinson & 5\% & 745 & 33 & 37.25 & 0.4666 & 0.2386 & 0.3831 & No 5\% rejection \\
+HAR-Parkinson & 2.5\% & 745 & 17 & 18.63 & 0.6988 & 0.3726 & 0.6235 & No 5\% rejection \\
+HAR-Parkinson & 1\% & 745 & 16 & 7.45 & 0.00631 & 0.4017 & 0.0169 & Rejects unconditional coverage \\
+EWMA(\(\lambda=0.90\)) & 5\% & 745 & 38 & 37.25 & 0.9000 & 0.9645 & 0.9912 & No 5\% rejection \\
+EWMA(\(\lambda=0.90\)) & 2.5\% & 745 & 27 & 18.63 & 0.0652 & 0.9832 & 0.1827 & Borderline at 5\% \\
+EWMA(\(\lambda=0.90\)) & 1\% & 745 & 18 & 7.45 & 0.00101 & 0.3448 & 0.00288 & Rejects unconditional coverage \\
+LSTM-LogTarget & 5\% & 726 & 87 & 36.30 & \(1.54{\times}10^{-13}\) & 0.0269 & \(1.26{\times}10^{-13}\) & Severe undercoverage \\
+LSTM-LogTarget & 1\% & 726 & 56 & 7.26 & \(3.81{\times}10^{-31}\) & 0.0732 & \(1.12{\times}10^{-30}\) & Severe undercoverage \\
+\bottomrule
+\end{tabular}
+\end{table*}

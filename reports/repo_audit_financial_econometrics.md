@@ -33,7 +33,7 @@
 
 ## Current Final Output Status
 
-- Master results: 16 models; common N=726; target dates 2023-02-07 to 2025-12-31.
+- Master results: 16 models; common N=745; target dates 2023-01-04 to 2025-12-31.
 - Advanced GARCH failure taxonomy: invalid_forecast_start_for_ar_mean_lag=432; nonfinite_forecast=144.
 
 ## Suspected Or Confirmed Issues

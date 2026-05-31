@@ -1,0 +1,27 @@
+\begin{table*}[!t]
+\centering
+\caption{Original common-window test comparison. GARCH(1,1) is numerically best by QLIKE and RMSE, while log-target neural variants obtain low MAE at the cost of much worse QLIKE and lower mean predicted variance.}
+\label{tab:main-results}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}r l r r r r r@{}}
+\toprule
+Rank & Model & \(N\) & RMSE & MAE & QLIKE & Mean predicted variance \\
+\midrule
+1 & GARCH(1,1) & 726 & \best{3.648839} & 1.393909 & \best{1.052888} & 1.241320 \\
+2 & ARIMA-GARCH & 726 & 3.671816 & 1.400256 & 1.055679 & 1.236080 \\
+3 & LSTM & 726 & 3.769716 & 1.639734 & 1.161001 & 1.568589 \\
+4 & ARIMA-GARCH-LSTM & 726 & 3.763253 & 1.720113 & 1.168609 & 1.701791 \\
+5 & LSTM-QLIKE & 726 & 3.782485 & 1.714073 & 1.185876 & 1.666980 \\
+6 & HistoricalMean & 726 & 3.799706 & 1.449153 & 1.192259 & 1.198773 \\
+7 & Hybrid-QLIKE & 726 & 3.807296 & 1.862578 & 1.230508 & 1.877606 \\
+8 & RollingVol-20 & 726 & 3.901051 & 1.462196 & 1.280635 & 1.208200 \\
+9 & RollingVol-10 & 726 & 3.974129 & 1.478891 & 1.309964 & 1.218541 \\
+10 & RollingVol-5 & 726 & 4.011383 & 1.492394 & 1.928009 & 1.201815 \\
+11 & Hybrid-LogTarget & 726 & 3.867813 & 1.109300 & 2.086360 & 0.339489 \\
+12 & Hybrid-LogTarget-Small & 726 & 3.868068 & \best{1.108165} & 2.232917 & 0.333670 \\
+13 & LSTM-LogTarget-Small & 726 & 3.888176 & 1.123546 & 2.281499 & 0.342765 \\
+14 & LSTM-LogTarget & 726 & 3.866882 & 1.108626 & 2.301502 & 0.309520 \\
+\bottomrule
+\end{tabular}
+\end{table*}

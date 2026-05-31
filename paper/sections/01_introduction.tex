@@ -6,12 +6,13 @@ The VN-Index is a useful Vietnamese equity-market case study. It is an emerging-
 
 This paper is positioned as a reproducible empirical financial econometrics study, not as a new forecasting algorithm. The main question is whether daily VN-Index volatility can be forecast reliably using standard financial econometric models, and whether neural or hybrid alternatives provide robust gains once model selection, proxy uncertainty, and tail-risk diagnostics are considered. The main target is next-day squared percentage log return, and the primary comparison uses a leakage-safe common test window with identical dates for all primary models.
 
-The contribution is fourfold:
+The contribution is fivefold:
 \begin{enumerate}
-\item A reproducible, leakage-safe out-of-sample comparison of daily VN-Index volatility forecasts on a unified 726-observation test window.
+\item A reproducible, leakage-safe out-of-sample comparison of daily VN-Index volatility forecasts on a corrected 745-observation common test window.
 \item Econometric evidence on VN-Index return non-normality, volatility clustering, ARCH effects, and conditional-variance persistence.
-\item A validation-based comparison of EWMA, HAR, GARCH-family, neural, hybrid, calibrated, and combined volatility forecasts.
-\item Proxy-robustness, spike-underprediction, refit-robustness, and common-Normal VaR diagnostics that connect average forecast accuracy to practical risk interpretation.
+\item A validation-based comparison of EWMA, HAR, GARCH-family, corrected-context neural, hybrid, calibrated, and combined volatility forecasts.
+\item Proxy-robustness, spike-underprediction, refit-robustness, common-Normal VaR/ES, and model-specific Normal GARCH VaR/ES diagnostics that connect average forecast accuracy to practical risk interpretation.
+\item A controlled validation-frozen regime-aware combination that tests whether corrected neural forecasts add useful high-volatility information without test-period tuning.
 \end{enumerate}
 
 The verified evidence supports a conservative conclusion. Selected GARCH-family specifications and HAR-Parkinson form the strongest group of daily VN-Index volatility forecasts under the unified common-window protocol. The results are economically consistent with persistent conditional variance and useful OHLC range information. The implemented neural and hybrid forecasts may contain complementary information, but they do not robustly dominate the strongest econometric benchmarks. Tail-risk diagnostics further show that good average QLIKE does not automatically imply adequate one-percent VaR coverage under a common-Normal mapping.

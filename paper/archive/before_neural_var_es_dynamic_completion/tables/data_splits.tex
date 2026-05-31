@@ -1,0 +1,19 @@
+\begin{table}[!t]
+\centering
+\caption{Chronological data splits and common evaluation window. The common-window comparison aligns all original forecasts on 726 target dates from 2023-02-07 to 2025-12-31.}
+\label{tab:data-splits}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}l r L{0.31\columnwidth} L{0.31\columnwidth}@{}}
+\toprule
+Dataset & Rows & Origin date range & Target date range \\
+\midrule
+Prepared full & 3989 & 2010-01-04 to 2025-12-31 & 2010-01-05 to 2025-12-31 \\
+Model-ready & 3968 & 2010-02-01 to 2025-12-30 & 2010-02-02 to 2025-12-31 \\
+Train & 2471 & 2010-02-01 to 2019-12-30 & 2010-02-02 to 2019-12-31 \\
+Validation & 750 & 2020-01-02 to 2022-12-29 & 2020-01-03 to 2022-12-30 \\
+Test & 745 & 2023-01-03 to 2025-12-30 & 2023-01-04 to 2025-12-31 \\
+Common test & 726 & 2023-02-06 to 2025-12-30 & 2023-02-07 to 2025-12-31 \\
+\bottomrule
+\end{tabular}
+\end{table}

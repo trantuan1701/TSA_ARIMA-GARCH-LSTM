@@ -39,7 +39,7 @@ The base LSTM uses length-20 sequences of lagged market and volatility features,
 
 Calibration methods include multiplicative QLIKE scaling, mean matching, nonnegative affine calibration, and isotonic calibration fitted on validation data only. Forecast combinations include equal-weight means, medians, two-model convex combinations, and stacking weights selected by validation QLIKE. Test-best combinations are treated as exploratory and are not used as primary evidence.
 
-The neural sequence-construction code has been corrected so validation and test forecasts may use valid pre-split historical context without target leakage. The checked-in neural forecasts were not retrained in the final pass, so the primary comparison remains the fair 726-date common window shared by all existing primary artifacts.
+The neural sequence-construction code was corrected so validation and test forecasts may use valid pre-split historical context without target leakage. All neural and hybrid forecasts used in the final tables were retrained under the versioned namespace \texttt{outputs/neural\_corrected\_context\_v2/}. The legacy pre-correction artifacts are preserved under \texttt{outputs/neural\_legacy\_pre\_context\_fix/}. Training uses seed 42, a sequence length of 20, training-only imputation and scaling, validation-monitored early stopping, and TensorFlow deterministic options where available. Corrected calibration and forecast-combination artifacts are regenerated under \texttt{outputs/advanced\_corrected\_context\_v2/}; calibration parameters and combination weights are fitted on validation data only.
 
 \subsection{Evaluation Protocol}
 
@@ -51,7 +51,11 @@ For aligned observations \(\{y_t,\hat{y}_t\}_{t=1}^n\), the evaluation uses
 \end{align}
 Predicted variances are clipped at \(\epsilon=10^{-8}\) before QLIKE computation. QLIKE is central because severe variance underprediction is penalized through \(y_t/\hat{y}_t\).
 
-Paired comparisons align observations by origin and target date, not by row order. Diebold-Mariano-style tests use loss differences relative to GARCH(1,1), and Holm correction is applied within clearly defined loss families. Regime and spike diagnostics use the common-window actual variance distribution. VaR diagnostics use a common Normal variance-to-VaR mapping so that all variance forecasts are translated into risk signals under the same distributional assumption. This is not a complete model-specific tail-distribution evaluation.
+Paired comparisons align observations by origin and target date, not by row order. Diebold-Mariano-style tests use loss differences relative to GARCH(1,1), and Holm correction is applied within clearly defined loss families. Regime and spike diagnostics use train/validation actual-variance thresholds to avoid selecting spike thresholds from test outcomes. The standardized risk layer maps every variance forecast to lower-tail return VaR and ES using a common zero-mean Normal distribution at 5\%, 2.5\%, and 1\%. A second layer reports model-specific Normal VaR/ES for selected GARCH-family models whose innovation distribution is verified as Normal. Student-\(t\), GED, and skewed-\(t\) ES are not reported unless parameter extraction and ES formulas are verified.
+
+\subsection{Reproducibility Statement}
+
+The repository is a git repository on branch \texttt{master}, with remote \url{https://github.com/trantuan1701/TSA_ARIMA-GARCH-LSTM.git} verified by \texttt{git ls-remote}. The reproduction snapshot should be the release commit or tag that contains the packaged root \texttt{paper.pdf}, the root \texttt{README.md}, and the final artifact manifest. Raw CafeF data are available in the local course-submission repository under \texttt{data/raw/}, but no redistribution license is present; a public release should either add a data-license statement or provide download/preprocessing instructions. The main reproduction commands are \texttt{make neural-corrected}, \texttt{make advanced-corrected-combinations}, \texttt{PYTHONDONTWRITEBYTECODE=1 make final-artifacts}, \texttt{PYTHONDONTWRITEBYTECODE=1 pytest -q}, and \texttt{make -C paper all}. Artifact hashes and provenance are recorded in \texttt{outputs/artifact\_manifest.csv} and \texttt{outputs/artifact\_manifest.json}.
 
 \subsection{Expanding-Window Refit Robustness}
 

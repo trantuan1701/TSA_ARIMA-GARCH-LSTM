@@ -1,0 +1,16 @@
+{
+  "abs_return": 0.5936113539283684,
+  "arima_garch_pred_var": 0.9309066530871428,
+  "arima_garch_pred_vol": 0.964835039313531,
+  "arima_mean_pred": 0.0338992923217352,
+  "arima_resid_proxy": 0.0305867566951427,
+  "garch_11_pred_var": 0.9335114666747878,
+  "garch_11_pred_vol": 0.9661839714437348,
+  "log_return_pct": 0.072417169275695,
+  "rolling_vol_10": 0.8535925327783636,
+  "rolling_vol_20": 0.9279839527093884,
+  "rolling_vol_5": 0.7974492066860882,
+  "squared_return": 0.3523744395126706,
+  "trading_value": 1697.15,
+  "volume": 96777710.0
+}

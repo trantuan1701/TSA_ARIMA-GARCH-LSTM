@@ -73,3 +73,87 @@ Date: 2026-05-30
 - Model-specific VaR remains unimplemented because distribution-specific fitted parameters are not consistently retained in prediction artifacts.
 - Rolling-window refit was omitted; expanding-window monthly refit was completed.
 - Full-window neural retraining remains pending but does not affect the aligned \(N=726\) primary comparison.
+
+## 2026-05-31 Baseline Preservation Before Neural/VaR/ES/Dynamic Completion
+
+- Archived current verified artifacts under `outputs/archive/before_neural_var_es_dynamic_completion/`, `models/archive/before_neural_var_es_dynamic_completion/`, and `paper/archive/before_neural_var_es_dynamic_completion/`.
+- Generated `outputs/audit/baseline_artifact_manifest.csv`, `outputs/audit/baseline_artifact_manifest.json`, and `reports/baseline_artifact_manifest.md` with SHA-256 hashes and conservative neural legacy labels.
+- Ran `PYTHONDONTWRITEBYTECODE=1 pytest -q`: 26 tests passed.
+- Ran `PYTHONDONTWRITEBYTECODE=1 make final-artifacts`: completed successfully.
+- Ran `make -C paper all`: completed successfully and wrote `paper/main.pdf`; baseline underfull-box warnings were emitted by Tectonic.
+- Reproduced the authoritative common-window leaderboard at \(N=726\), target dates 2023-02-07 to 2025-12-31:
+  - AdvGARCH-BestAsymmetric QLIKE 1.021413.
+  - AdvGARCH-BestQLIKE QLIKE 1.022898.
+  - HAR-Parkinson QLIKE 1.029373.
+  - GARCH(1,1) QLIKE 1.052888.
+- Reproduced GARCH(1,1) persistence \(\alpha+\beta=0.973264\) and half-life 25.58 trading days.
+- Reproduced negative EGARCH asymmetry parameters for AdvGARCH-BestAsymmetric and AdvGARCH-BestQLIKE.
+- Reproduced the expanding-monthly refit instability: AdvGARCH-BestQLIKE has 19 failed monthly segments and only 340 expanding-monthly forecasts.
+
+## 2026-05-31 Neural/VaR/ES/Dynamic Completion Pass
+
+- Verified repository metadata:
+  - Branch: `master`.
+  - Commit: `c1bd976d8d31dfcb417293dffdbf56060c236564`.
+  - Remote: `https://github.com/trantuan1701/TSA_ARIMA-GARCH-LSTM.git`.
+- Updated reproducibility files and manifests:
+  - `README_REPRODUCIBILITY.md`.
+  - `outputs/artifact_manifest.csv`.
+  - `outputs/artifact_manifest.json`.
+  - `reports/reproducibility_statement_audit.md`.
+- Preserved legacy neural artifacts under:
+  - `outputs/neural_legacy_pre_context_fix/`.
+  - `models/neural_legacy_pre_context_fix/`.
+- Retrained corrected-context neural and hybrid models under:
+  - `outputs/neural_corrected_context_v2/`.
+  - `outputs/advanced_corrected_context_v2/`.
+- Corrected-context neural test coverage is complete for the full test window:
+  - Validation forecasts: 750.
+  - Test forecasts: 745.
+  - Primary test target dates: 2023-01-04 to 2025-12-31.
+- The authoritative primary leaderboard moved from \(N=726\) to \(N=745\) because all primary rows now have aligned corrected-context forecasts:
+  - AdvGARCH-BestAsymmetric QLIKE 1.029992.
+  - AdvGARCH-BestQLIKE QLIKE 1.032548.
+  - HAR-Parkinson QLIKE 1.034521.
+  - GARCH(1,1) QLIKE 1.062958.
+  - LSTM QLIKE 1.163862.
+  - ARIMA-GARCH-LSTM QLIKE 1.172986.
+- Generated corrected neural comparison artifacts:
+  - `outputs/final/primary_results_corrected_neural.csv`.
+  - `outputs/final/neural_retraining_comparison.csv`.
+  - `outputs/final/neural_seed_robustness.csv`.
+  - `paper/tables/neural_retraining_comparison.tex`.
+- Recomputed corrected regime/spike diagnostics:
+  - `outputs/final/regime_spike_results_corrected_neural.csv`.
+  - `paper/tables/regime_spike_results_corrected_neural.tex`.
+  - Corrected neural and hybrid forecasts remain weaker than the best econometric models overall, but selected neural-dependent calibrated/combination forecasts retain lower spike-day QLIKE than the leading static econometric rows.
+- Added common-Normal VaR/ES for all primary models and the regime-aware candidate:
+  - `outputs/final/common_distribution_var_es_all_models.csv`.
+  - `paper/tables/common_distribution_var_es_main.tex`.
+  - `paper/tables/common_distribution_var_es_full_appendix.tex`.
+  - The common mapping is zero-mean lower-tail Normal; it is not described as model-specific VaR.
+- Added model-specific Normal VaR/ES for retained GARCH-family specifications:
+  - `outputs/final/model_specific_var_es_garch.csv`.
+  - `paper/tables/model_specific_var_es_garch.tex`.
+  - `reports/distribution_specific_var_es_audit.md`.
+  - GED/skewed/heavy-tail ES was not reported because the ES implementation and parameter extraction were not verified enough for formal results.
+- Implemented a validation-selected regime-aware combination:
+  - Experts: HAR-Parkinson and Calibrated-Hybrid-LogTarget-Small-isotonic.
+  - Regime indicator: origin-available trailing 20-day volatility.
+  - Selected threshold: validation 75th percentile.
+  - Low-regime weights: 0.45 econometric / 0.55 neural.
+  - High-regime weights: 0.00 econometric / 1.00 neural.
+  - Test QLIKE: 1.064346.
+  - Static baseline QLIKE: 1.077023.
+  - The regime-aware combination improves over the static neural/econometric combination and improves spike behavior, but it does not dominate the strongest econometric models overall.
+- Re-audited expanding monthly refit failures:
+  - AdvGARCH-BestQLIKE has 20 failed segments over the expanded \(N=745\) window, all classified as ARIMA convergence failures.
+  - Its 340-forecast incomplete refit result is separated from complete-window refit models.
+- Added tests for completion logic in `tests/test_completion_extensions.py`.
+- Final verification:
+  - `PYTHONDONTWRITEBYTECODE=1 pytest -q`: 32 tests passed.
+  - `PYTHONDONTWRITEBYTECODE=1 make final-artifacts`: completed successfully.
+  - `make -C paper all`: completed successfully; Tectonic emitted underfull-box warnings but no undefined references, citation failures, overfull boxes, LaTeX errors, or emergency stops were detected in the final log check.
+- Final PDFs:
+  - `paper/main.pdf`.
+  - `paper/final_vnindex_volatility_financial_econometrics_v3.pdf`.

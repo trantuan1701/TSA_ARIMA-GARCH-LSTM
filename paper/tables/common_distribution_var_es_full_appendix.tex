@@ -1,0 +1,63 @@
+\begin{table*}[!t]
+\centering
+\caption{Full common-Normal zero-mean VaR and ES diagnostics.}
+\label{tab:common-distribution-var-es-full}
+\scriptsize
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+model & alpha & n\_obs & var\_violations & expected\_violations & kupiec\_uc\_p\_value & quantile\_loss \\
+\midrule
+ComboStack-PoolD\_AllStable & 0.010 & 745 & 11 & 7.45 & 0.222 & 0.052302 \\
+Hybrid-QLIKE & 0.010 & 745 & 11 & 7.45 & 0.222 & 0.053256 \\
+ARIMA-GARCH-LSTM & 0.010 & 745 & 12 & 7.45 & 0.124 & 0.053882 \\
+LSTM & 0.010 & 745 & 12 & 7.45 & 0.124 & 0.054423 \\
+Calibrated-Hybrid-LogTarget-Small-isotonic & 0.010 & 745 & 13 & 7.45 & 0.0645 & 0.053532 \\
+RegimeAwareCombo-Vol20Q75 & 0.010 & 745 & 13 & 7.45 & 0.0645 & 0.053119 \\
+AdvGARCH-BestAsymmetric & 0.010 & 745 & 15 & 7.45 & 0.0145 & 0.053518 \\
+AdvGARCH-BestQLIKE & 0.010 & 745 & 15 & 7.45 & 0.0145 & 0.053881 \\
+ARIMA-GARCH & 0.010 & 745 & 16 & 7.45 & 0.00631 & 0.055483 \\
+GARCH(1,1) & 0.010 & 745 & 16 & 7.45 & 0.00631 & 0.054979 \\
+HAR-Parkinson & 0.010 & 745 & 16 & 7.45 & 0.00631 & 0.053098 \\
+HAR-SquaredReturn & 0.010 & 745 & 16 & 7.45 & 0.00631 & 0.055889 \\
+HistoricalMean & 0.010 & 745 & 17 & 7.45 & 0.00259 & 0.059312 \\
+EWMA(lambda=0.90) & 0.010 & 745 & 18 & 7.45 & 0.00101 & 0.057467 \\
+RollingVol-20 & 0.010 & 745 & 20 & 7.45 & 0.000132 & 0.062204 \\
+RollingVol-10 & 0.010 & 745 & 27 & 7.45 & 2.64e-08 & 0.059110 \\
+RollingVol-5 & 0.010 & 745 & 45 & 7.45 & 4.58e-21 & 0.067695 \\
+HAR-Parkinson & 0.025 & 745 & 17 & 18.62 & 0.699 & 0.090158 \\
+RegimeAwareCombo-Vol20Q75 & 0.025 & 745 & 17 & 18.62 & 0.699 & 0.092862 \\
+Calibrated-Hybrid-LogTarget-Small-isotonic & 0.025 & 745 & 16 & 18.62 & 0.528 & 0.095923 \\
+ComboStack-PoolD\_AllStable & 0.025 & 745 & 16 & 18.62 & 0.528 & 0.094566 \\
+ARIMA-GARCH & 0.025 & 745 & 22 & 18.62 & 0.441 & 0.092562 \\
+GARCH(1,1) & 0.025 & 745 & 22 & 18.62 & 0.441 & 0.092134 \\
+HistoricalMean & 0.025 & 745 & 22 & 18.62 & 0.441 & 0.098261 \\
+LSTM & 0.025 & 745 & 15 & 18.62 & 0.379 & 0.096181 \\
+Hybrid-QLIKE & 0.025 & 745 & 14 & 18.62 & 0.257 & 0.097427 \\
+AdvGARCH-BestAsymmetric & 0.025 & 745 & 24 & 18.62 & 0.227 & 0.090424 \\
+AdvGARCH-BestQLIKE & 0.025 & 745 & 24 & 18.62 & 0.227 & 0.090618 \\
+HAR-SquaredReturn & 0.025 & 745 & 24 & 18.62 & 0.227 & 0.093492 \\
+ARIMA-GARCH-LSTM & 0.025 & 745 & 13 & 18.62 & 0.163 & 0.096234 \\
+EWMA(lambda=0.90) & 0.025 & 745 & 27 & 18.62 & 0.0652 & 0.094409 \\
+RollingVol-20 & 0.025 & 745 & 28 & 18.62 & 0.0404 & 0.097510 \\
+RollingVol-10 & 0.025 & 745 & 36 & 18.62 & 0.000292 & 0.096921 \\
+RollingVol-5 & 0.025 & 745 & 57 & 18.62 & 3.64e-13 & 0.107025 \\
+EWMA(lambda=0.90) & 0.050 & 745 & 38 & 37.25 & 0.9 & 0.141546 \\
+ARIMA-GARCH & 0.050 & 745 & 35 & 37.25 & 0.703 & 0.140517 \\
+GARCH(1,1) & 0.050 & 745 & 35 & 37.25 & 0.703 & 0.140396 \\
+AdvGARCH-BestAsymmetric & 0.050 & 745 & 34 & 37.25 & 0.579 & 0.138450 \\
+AdvGARCH-BestQLIKE & 0.050 & 745 & 34 & 37.25 & 0.579 & 0.138440 \\
+RollingVol-20 & 0.050 & 745 & 41 & 37.25 & 0.535 & 0.143854 \\
+HAR-Parkinson & 0.050 & 745 & 33 & 37.25 & 0.467 & 0.138978 \\
+HAR-SquaredReturn & 0.050 & 745 & 31 & 37.25 & 0.28 & 0.142282 \\
+HistoricalMean & 0.050 & 745 & 30 & 37.25 & 0.208 & 0.148039 \\
+RollingVol-10 & 0.050 & 745 & 48 & 37.25 & 0.083 & 0.144391 \\
+RegimeAwareCombo-Vol20Q75 & 0.050 & 745 & 23 & 37.25 & 0.0102 & 0.143732 \\
+Calibrated-Hybrid-LogTarget-Small-isotonic & 0.050 & 745 & 22 & 37.25 & 0.00566 & 0.148685 \\
+LSTM & 0.050 & 745 & 22 & 37.25 & 0.00566 & 0.149397 \\
+ARIMA-GARCH-LSTM & 0.050 & 745 & 20 & 37.25 & 0.00153 & 0.150913 \\
+Hybrid-QLIKE & 0.050 & 745 & 20 & 37.25 & 0.00153 & 0.153857 \\
+ComboStack-PoolD\_AllStable & 0.050 & 745 & 19 & 37.25 & 0.000741 & 0.148318 \\
+RollingVol-5 & 0.050 & 745 & 73 & 37.25 & 9.05e-08 & 0.155053 \\
+\bottomrule
+\end{tabular}
+\end{table*}

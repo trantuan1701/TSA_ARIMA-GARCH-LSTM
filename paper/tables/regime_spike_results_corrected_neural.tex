@@ -1,0 +1,24 @@
+\begin{table*}[!t]
+\centering
+\caption{Corrected-context regime and spike diagnostics.}
+\label{tab:regime-spike-corrected-neural}
+\scriptsize
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+model & overall\_n & overall\_qlike & calm\_qlike & high\_qlike & spike\_n & spike\_qlike & severe\_spike\_underprediction\_rate \\
+\midrule
+AdvGARCH-BestAsymmetric & 745 & 1.029992 & -0.075 & 4.379 & 45 & 9.366 & 0.889 \\
+AdvGARCH-BestQLIKE & 745 & 1.032548 & -0.077 & 4.393 & 45 & 9.391 & 0.889 \\
+HAR-Parkinson & 745 & 1.034521 & 0.039 & 4.138 & 45 & 8.821 & 0.889 \\
+HAR-SquaredReturn & 745 & 1.047975 & 0.039 & 4.204 & 45 & 8.939 & 0.889 \\
+GARCH(1,1) & 745 & 1.062958 & -0.038 & 4.403 & 45 & 9.406 & 0.867 \\
+RegimeAwareCombo-Vol20Q75 & 745 & 1.064346 & 0.277 & 3.535 & 45 & 7.350 & 0.889 \\
+ARIMA-GARCH & 745 & 1.065995 & -0.032 & 4.401 & 45 & 9.403 & 0.867 \\
+ComboStack-PoolD\_AllStable & 745 & 1.114856 & 0.451 & 3.200 & 45 & 6.406 & 0.867 \\
+Calibrated-Hybrid-LogTarget-Small-isotonic & 745 & 1.126931 & 0.417 & 3.369 & 45 & 6.906 & 0.889 \\
+LSTM & 745 & 1.163862 & 0.489 & 3.374 & 45 & 7.023 & 0.933 \\
+ARIMA-GARCH-LSTM & 745 & 1.172986 & 0.539 & 3.223 & 45 & 6.533 & 0.911 \\
+EWMA(lambda=0.90) & 745 & 1.225435 & -0.146 & 5.335 & 45 & 11.971 & 0.889 \\
+\bottomrule
+\end{tabular}
+\end{table*}

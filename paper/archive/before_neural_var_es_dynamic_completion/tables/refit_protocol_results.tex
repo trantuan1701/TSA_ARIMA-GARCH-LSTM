@@ -1,0 +1,25 @@
+\begin{table*}[!t]
+\centering
+\caption{Static versus expanding-window monthly refit robustness on the unified common window.}
+\label{tab:refit-protocol-results}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}L{0.18\textwidth}L{0.12\textwidth}rrrrrrrr@{}}
+\toprule
+Model & Protocol & \(N\) & Full & QLIKE & RMSE & MAE & Pred./Actual & Q90 QLIKE & Failed \\
+\midrule
+ARIMA-GARCH & expanding\_monthly & 726 & yes & 1.049005 & 3.669563 & 1.417771 & 1.049 & 6.521 & 0 \\
+ARIMA-GARCH & static\_train\_only & 726 & yes & 1.055679 & 3.671816 & 1.400256 & 1.020 & 6.770 & 0 \\
+AdvGARCH-BestAsymmetric & expanding\_monthly & 726 & yes & 1.014849 & 3.556510 & 1.350518 & 0.997 & 6.388 & 0 \\
+AdvGARCH-BestAsymmetric & static\_train\_only & 726 & yes & 1.021413 & 3.565782 & 1.314342 & 0.933 & 6.713 & 0 \\
+AdvGARCH-BestQLIKE & expanding\_monthly & 340 & no & 1.202280 & 4.350815 & 1.532191 & 0.927 & 7.762 & 19 \\
+AdvGARCH-BestQLIKE & static\_train\_only & 726 & yes & 1.022898 & 3.583987 & 1.318196 & 0.931 & 6.730 & 0 \\
+EWMA(lambda=0.90) & expanding\_monthly & 726 & yes & 1.219608 & 3.716363 & 1.410256 & 1.000 & 8.425 & 0 \\
+EWMA(lambda=0.90) & static\_train\_only & 726 & yes & 1.219608 & 3.716363 & 1.410256 & 1.000 & 8.425 & 0 \\
+GARCH(1,1) & expanding\_monthly & 726 & yes & 1.047945 & 3.656469 & 1.415344 & 1.054 & 6.523 & 0 \\
+GARCH(1,1) & static\_train\_only & 726 & yes & 1.052888 & 3.648839 & 1.393909 & 1.024 & 6.766 & 0 \\
+HAR-Parkinson & expanding\_monthly & 726 & yes & 1.029873 & 3.647880 & 1.374900 & 1.007 & 6.130 & 0 \\
+HAR-Parkinson & static\_train\_only & 726 & yes & 1.029373 & 3.621325 & 1.353338 & 0.971 & 6.337 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table*}

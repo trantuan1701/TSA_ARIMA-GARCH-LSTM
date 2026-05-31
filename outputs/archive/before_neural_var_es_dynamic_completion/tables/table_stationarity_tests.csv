@@ -1,0 +1,14 @@
+section,test,series,transformation,n_obs,lags,statistic,p_value,used_lag,critical_value_1pct,critical_value_5pct,critical_value_10pct
+stationarity_dependence,ADF,log_return_pct,level,3966,auto_aic,-41.08428033879119,0.0,1,-3.4319999086046633,-2.8622690393645924,-2.5671580757111188
+stationarity_dependence,Ljung-Box,log_return_pct,level,3968,10,49.34284055585686,3.5243183963970193e-07,10,not_available,not_available,not_available
+stationarity_dependence,Ljung-Box,log_return_pct,level,3968,20,60.71073494360601,5.525179118045107e-06,20,not_available,not_available,not_available
+stationarity_dependence,Ljung-Box,squared_return,level,3968,10,994.9177483345255,2.326336732610436e-207,10,not_available,not_available,not_available
+stationarity_dependence,Ljung-Box,squared_return,level,3968,20,1081.3983192587655,1.6651477280168782e-216,20,not_available,not_available,not_available
+residual_diagnostics,Ljung-Box,"GARCH(1,1) standardized residuals",level,2471,10,52.51980424570746,9.14165845216436e-08,10,not_available,not_available,not_available
+residual_diagnostics,Ljung-Box,"GARCH(1,1) standardized residuals",level,2471,20,59.066255113485106,9.92342071792245e-06,20,not_available,not_available,not_available
+residual_diagnostics,Ljung-Box,"GARCH(1,1) standardized residuals",squared,2471,10,3.4167372189126057,0.9698501478222196,10,not_available,not_available,not_available
+residual_diagnostics,Ljung-Box,"GARCH(1,1) standardized residuals",squared,2471,20,14.272938168079202,0.8163920437578791,20,not_available,not_available,not_available
+residual_diagnostics,Ljung-Box,ARIMA-GARCH standardized residuals,level,2471,10,11.576377383473599,0.31440756805748965,10,not_available,not_available,not_available
+residual_diagnostics,Ljung-Box,ARIMA-GARCH standardized residuals,level,2471,20,17.751112118682293,0.6037997016776377,20,not_available,not_available,not_available
+residual_diagnostics,Ljung-Box,ARIMA-GARCH standardized residuals,squared,2471,10,3.55071345263057,0.9653483058617118,10,not_available,not_available,not_available
+residual_diagnostics,Ljung-Box,ARIMA-GARCH standardized residuals,squared,2471,20,14.77058616829934,0.7893807360758888,20,not_available,not_available,not_available

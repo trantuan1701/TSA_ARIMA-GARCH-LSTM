@@ -1,0 +1,48 @@
+section,label,value,detail
+overall,attempted_candidates,3168.0,
+overall,successful_fits,2592.0,
+overall,failed_fits,576.0,
+overall,convergence_failures,0.0,
+overall,nonfinite_forecast_failures,144.0,
+success_by_family,APARCH,576.0,
+success_by_family,ARCH,288.0,
+success_by_family,EGARCH,576.0,
+success_by_family,FIGARCH,216.0,
+success_by_family,GARCH,648.0,
+success_by_family,GJR-GARCH,288.0,
+success_by_distribution,ged,648.0,
+success_by_distribution,normal,648.0,
+success_by_distribution,skewt,648.0,
+success_by_distribution,t,648.0,
+failure_by_family,APARCH,128.0,
+failure_by_family,ARCH,64.0,
+failure_by_family,EGARCH,128.0,
+failure_by_family,FIGARCH,48.0,
+failure_by_family,GARCH,144.0,
+failure_by_family,GJR-GARCH,64.0,
+failure_by_distribution,ged,144.0,
+failure_by_distribution,normal,144.0,
+failure_by_distribution,skewt,144.0,
+failure_by_distribution,t,144.0,
+failure_reason,numerical error,576.0,
+top_validation_models,rank_1,1.611303620133235,arima_3_0_3_egarch_1_1_2_normal | test_QLIKE=1.0325481138224148
+top_validation_models,rank_2,1.611308263319383,arima_3_0_3_egarch_1_1_1_normal | test_QLIKE=1.032548281661854
+top_validation_models,rank_3,1.6116841455574522,arima_3_0_2_egarch_1_1_2_normal | test_QLIKE=1.032001588780607
+top_validation_models,rank_4,1.61168829327561,arima_3_0_2_egarch_1_1_1_normal | test_QLIKE=1.0320004302966586
+top_validation_models,rank_5,1.6117770727858574,arima_3_0_3_egarch_1_1_1_ged | test_QLIKE=1.0315359747264947
+top_validation_models,rank_6,1.6117827445955897,arima_3_0_3_egarch_1_1_2_ged | test_QLIKE=1.031537072907859
+top_validation_models,rank_7,1.6122328875772194,arima_2_0_3_egarch_1_1_2_normal | test_QLIKE=1.031493354209397
+top_validation_models,rank_8,1.6122369572301432,arima_2_0_3_egarch_1_1_1_normal | test_QLIKE=1.0314910001500135
+top_validation_models,rank_9,1.6122722564450298,direct_zero_egarch_1_1_1_normal | test_QLIKE=1.0299916811125422
+top_validation_models,rank_10,1.6122830796719256,arima_3_0_2_egarch_1_1_1_ged | test_QLIKE=1.0310590476403296
+top_test_models_exploratory,rank_1,1.0175490836514298,direct_constant_egarch_2_1_2_ged | validation_QLIKE=1.6253756196422409
+top_test_models_exploratory,rank_2,1.0177836298262697,direct_constant_egarch_2_1_2_t | validation_QLIKE=1.6271011912479192
+top_test_models_exploratory,rank_3,1.018402076230252,direct_constant_egarch_2_1_1_ged | validation_QLIKE=1.6269522328125317
+top_test_models_exploratory,rank_4,1.018461074964616,direct_constant_egarch_2_1_1_t | validation_QLIKE=1.6290718360975431
+top_test_models_exploratory,rank_5,1.0196836213327711,arima_1_0_0_egarch_2_1_2_normal | validation_QLIKE=1.6209412963417102
+top_test_models_exploratory,rank_6,1.0197280795183468,arima_0_0_1_egarch_2_1_2_normal | validation_QLIKE=1.6212439112549812
+top_test_models_exploratory,rank_7,1.0197489921283067,arima_1_0_0_egarch_2_1_2_ged | validation_QLIKE=1.622808907899229
+top_test_models_exploratory,rank_8,1.019793876597816,arima_0_0_1_egarch_2_1_2_ged | validation_QLIKE=1.6232935242203324
+top_test_models_exploratory,rank_9,1.0204203308473907,arima_1_0_0_egarch_2_1_1_ged | validation_QLIKE=1.6247465443964533
+top_test_models_exploratory,rank_10,1.020480533421976,arima_0_0_1_egarch_2_1_1_ged | validation_QLIKE=1.6252507795530475
+selected_model,validation_selected_primary,1.611303620133235,AdvGARCH-BestQLIKE | arima_3_0_3_egarch_1_1_2_normal | test_QLIKE=1.0325481138224148

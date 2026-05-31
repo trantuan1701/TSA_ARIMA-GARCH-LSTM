@@ -1,0 +1,7 @@
+claim,status,key_evidence,caveat
+"GARCH(1,1) is a strong benchmark.",partially_supported,"GARCH(1,1) average QLIKE rank 7.00; top-5 under 2/7 proxies.","Range-based proxies can favor smoother forecasts, so exact rank is proxy-dependent."
+Advanced GARCH-family models can improve QLIKE modestly.,supported,AdvGARCH-BestQLIKE average QLIKE rank 4.71; raw DM improvement over GARCH under 4 proxies; Holm under 1 proxies.,Multiple-testing correction is stricter than raw DM tests.
+ARIMA mean dynamics add limited value.,supported,ARIMA-GARCH average QLIKE rank 9.71 versus GARCH 7.00.,"This claim is about the existing ARIMA-GARCH and proxy evaluation, not retrained proxy-specific ARIMA models."
+Neural/hybrid models do not robustly dominate econometric models.,supported,Average best neural/hybrid proxy rank 15.14; average best econometric proxy rank 1.14.,Calibrated neural forecasts can improve under some proxies but are still evaluated without retraining.
+Log-target neural variants can reduce MAE but underpredict risk.,supported,Raw log-target average pred/actual ratio 0.356; average spike underprediction 1.000.,"Range-based targets change the actual scale, but raw log-target forecasts remain visibly low relative to proxy spikes."
+Results are sensitive or insensitive to the volatility proxy.,partially_supported,Average rank standard deviation across models is 3.59; top-ranked model changes across proxy definitions.,"Paper claims should refer to robustness directionally, not as identical rankings across all proxies."

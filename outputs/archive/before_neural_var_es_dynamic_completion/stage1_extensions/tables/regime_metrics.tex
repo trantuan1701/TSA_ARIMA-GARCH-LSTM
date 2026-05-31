@@ -1,0 +1,62 @@
+\begin{tabular}{l l r r r r r}
+\hline
+model & regime & n\_obs & rmse & mae & qlike & pred\_actual\_ratio \\
+\hline
+ARIMA-GARCH & calm & 373 & 1.258983 & 0.939209 & -0.070463 & 12.289178 \\
+ARIMA-GARCH & extreme-volatility & 75 & 10.720698 & 6.114598 & 6.761726 & 0.252547 \\
+ARIMA-GARCH & high-volatility & 111 & 1.971833 & 1.024675 & 1.747363 & 1.065120 \\
+ARIMA-GARCH & normal & 186 & 1.245559 & 0.705257 & 0.641733 & 2.062535 \\
+ARIMA-GARCH-LSTM & calm & 364 & 1.564156 & 1.529276 & 0.514963 & 19.238703 \\
+ARIMA-GARCH-LSTM & extreme-volatility & 73 & 11.163326 & 6.008434 & 4.792896 & 0.245035 \\
+ARIMA-GARCH-LSTM & high-volatility & 109 & 0.595306 & 0.466665 & 1.444800 & 1.210285 \\
+ARIMA-GARCH-LSTM & normal & 180 & 1.190775 & 1.125907 & 0.853328 & 2.983808 \\
+AdvGARCH-BestAsymmetric & calm & 373 & 1.066944 & 0.851675 & -0.114589 & 11.237026 \\
+AdvGARCH-BestAsymmetric & extreme-volatility & 75 & 10.671800 & 6.181184 & 6.728063 & 0.241191 \\
+AdvGARCH-BestAsymmetric & high-volatility & 111 & 1.449782 & 0.874124 & 1.738221 & 0.939812 \\
+AdvGARCH-BestAsymmetric & normal & 186 & 0.909374 & 0.569747 & 0.605045 & 1.833897 \\
+AdvGARCH-BestQLIKE & calm & 373 & 1.076593 & 0.854937 & -0.116212 & 11.276243 \\
+AdvGARCH-BestQLIKE & extreme-volatility & 75 & 10.748387 & 6.219293 & 6.755769 & 0.237577 \\
+AdvGARCH-BestQLIKE & high-volatility & 111 & 1.331508 & 0.848906 & 1.735963 & 0.928604 \\
+AdvGARCH-BestQLIKE & normal & 186 & 0.914361 & 0.576688 & 0.608715 & 1.839776 \\
+ComboStack-PoolC\_GARCH\_CalibratedNeural & calm & 364 & 1.471820 & 1.380458 & 0.393338 & 17.463846 \\
+ComboStack-PoolC\_GARCH\_CalibratedNeural & extreme-volatility & 73 & 10.868650 & 5.821816 & 4.898244 & 0.276976 \\
+ComboStack-PoolC\_GARCH\_CalibratedNeural & high-volatility & 109 & 0.709334 & 0.532329 & 1.460643 & 1.172378 \\
+ComboStack-PoolC\_GARCH\_CalibratedNeural & normal & 180 & 1.170648 & 1.041277 & 0.809899 & 2.834694 \\
+ComboStack-PoolD\_AllStable & calm & 364 & 1.546546 & 1.442593 & 0.427113 & 18.204893 \\
+ComboStack-PoolD\_AllStable & extreme-volatility & 73 & 10.813740 & 5.797875 & 4.688413 & 0.289079 \\
+ComboStack-PoolD\_AllStable & high-volatility & 109 & 0.775524 & 0.598025 & 1.469471 & 1.226489 \\
+ComboStack-PoolD\_AllStable & normal & 180 & 1.253594 & 1.112934 & 0.836262 & 2.960837 \\
+EWMA(lambda=0.90) & calm & 373 & 1.321665 & 0.901565 & -0.194600 & 11.833219 \\
+EWMA(lambda=0.90) & extreme-volatility & 75 & 10.774802 & 6.113361 & 8.344828 & 0.248387 \\
+EWMA(lambda=0.90) & high-volatility & 111 & 2.039871 & 1.105286 & 2.030267 & 1.086699 \\
+EWMA(lambda=0.90) & normal & 186 & 1.386194 & 0.792228 & 0.722114 & 2.071561 \\
+GARCH(1,1) & calm & 373 & 1.252209 & 0.931973 & -0.076765 & 12.202198 \\
+GARCH(1,1) & extreme-volatility & 75 & 10.621830 & 6.062454 & 6.757529 & 0.260605 \\
+GARCH(1,1) & high-volatility & 111 & 2.057296 & 1.049890 & 1.755567 & 1.078677 \\
+GARCH(1,1) & normal & 186 & 1.250366 & 0.698993 & 0.639005 & 2.054909 \\
+HAR-Parkinson & calm & 373 & 1.173241 & 0.957940 & 0.007279 & 12.514328 \\
+HAR-Parkinson & extreme-volatility & 75 & 10.892760 & 6.280225 & 6.334915 & 0.225701 \\
+HAR-Parkinson & high-volatility & 111 & 0.977943 & 0.726843 & 1.623571 & 0.922455 \\
+HAR-Parkinson & normal & 186 & 0.806355 & 0.553547 & 0.605744 & 1.892140 \\
+HistoricalMean & calm & 373 & 1.118409 & 1.115577 & 0.250699 & 14.409105 \\
+HistoricalMean & extreme-volatility & 75 & 11.554956 & 6.739438 & 6.803246 & 0.151013 \\
+HistoricalMean & high-volatility & 111 & 0.484999 & 0.358020 & 1.452599 & 0.786596 \\
+HistoricalMean & normal & 186 & 0.660859 & 0.627635 & 0.657734 & 2.098919 \\
+Hybrid-QLIKE & calm & 364 & 1.751448 & 1.744159 & 0.646223 & 21.801485 \\
+Hybrid-QLIKE & extreme-volatility & 73 & 11.139934 & 5.915113 & 4.570475 & 0.257732 \\
+Hybrid-QLIKE & high-volatility & 109 & 0.549369 & 0.471281 & 1.446232 & 1.273620 \\
+Hybrid-QLIKE & normal & 180 & 1.323043 & 1.301028 & 0.926890 & 3.292365 \\
+LSTM & calm & 364 & 1.447205 & 1.435199 & 0.467796 & 18.116711 \\
+LSTM & extreme-volatility & 73 & 11.314985 & 6.210286 & 5.099184 & 0.219672 \\
+LSTM & high-volatility & 109 & 0.398171 & 0.326536 & 1.425610 & 1.064949 \\
+LSTM & normal & 180 & 1.030805 & 0.994953 & 0.805427 & 2.753071 \\
+LSTM-QLIKE & calm & 364 & 1.552332 & 1.543860 & 0.534773 & 19.412637 \\
+LSTM-QLIKE & extreme-volatility & 73 & 11.266484 & 6.140832 & 4.909112 & 0.228399 \\
+LSTM-QLIKE & high-volatility & 109 & 0.405539 & 0.343575 & 1.427243 & 1.120179 \\
+LSTM-QLIKE & normal & 180 & 1.120000 & 1.092900 & 0.846413 & 2.925651 \\
+RollingVol-20 & calm & 373 & 1.572129 & 0.927564 & -0.234889 & 12.145541 \\
+RollingVol-20 & extreme-volatility & 75 & 11.175902 & 6.305171 & 8.840260 & 0.223588 \\
+RollingVol-20 & high-volatility & 111 & 1.993789 & 1.126879 & 2.161587 & 1.082771 \\
+RollingVol-20 & normal & 186 & 1.568237 & 0.837190 & 0.764738 & 2.083637 \\
+\hline
+\end{tabular}

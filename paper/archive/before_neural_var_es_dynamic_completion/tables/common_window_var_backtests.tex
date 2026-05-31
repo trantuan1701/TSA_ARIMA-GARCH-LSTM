@@ -1,0 +1,24 @@
+\begin{table}[!t]
+\centering
+\caption{Common-window common-Normal VaR backtests.}
+\label{tab:common-window-var-backtests}
+\scriptsize
+\begin{tabular}{@{}L{0.38\columnwidth}rrrrr@{}}
+\toprule
+Model & Level & \(N\) & Viol. & Expected & Kupiec \(p\) \\
+\midrule
+AdvGARCH-BestAsymmetric & 5\% & 726 & 33 & 36.30 & 0.568 \\
+AdvGARCH-BestAsymmetric & 1\% & 726 & 14 & 7.26 & 0.0258 \\
+AdvGARCH-BestQLIKE & 5\% & 726 & 33 & 36.30 & 0.568 \\
+AdvGARCH-BestQLIKE & 1\% & 726 & 14 & 7.26 & 0.0258 \\
+HAR-Parkinson & 5\% & 726 & 32 & 36.30 & 0.455 \\
+HAR-Parkinson & 1\% & 726 & 15 & 7.26 & 0.0116 \\
+GARCH(1,1) & 5\% & 726 & 34 & 36.30 & 0.692 \\
+GARCH(1,1) & 1\% & 726 & 15 & 7.26 & 0.0116 \\
+ARIMA-GARCH & 5\% & 726 & 34 & 36.30 & 0.692 \\
+ARIMA-GARCH & 1\% & 726 & 15 & 7.26 & 0.0116 \\
+EWMA(lambda=0.90) & 5\% & 726 & 37 & 36.30 & 0.905 \\
+EWMA(lambda=0.90) & 1\% & 726 & 17 & 7.26 & 0.00197 \\
+\bottomrule
+\end{tabular}
+\end{table}

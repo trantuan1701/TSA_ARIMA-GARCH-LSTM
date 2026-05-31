@@ -1,0 +1,14 @@
+\begin{table}[!t]
+\centering
+\caption{Advanced GARCH failure taxonomy. Categories sum exactly to the 576 failed candidates.}
+\label{tab:advanced-garch-failure-audit}
+\scriptsize
+\begin{tabular}{@{}L{0.48\columnwidth}rL{0.32\columnwidth}@{}}
+\toprule
+Failure category & Count & Example \\
+\midrule
+invalid\_forecast\_start\_for\_ar\_mean\_lag & 432 & AR(2), ARCH(1), normal \\
+nonfinite\_forecast & 144 & AR(1), ARCH(1), normal \\
+\bottomrule
+\end{tabular}
+\end{table}

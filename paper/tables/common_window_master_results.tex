@@ -1,6 +1,6 @@
 \begin{table*}[!t]
 \centering
-\caption{Primary common-window test results. All models use target dates 2023-02-07 to 2025-12-31 and the same next-day squared percentage log-return target.}
+\caption{Primary common-window test results. All models use target dates 2023-01-04 to 2025-12-31 and the same next-day squared percentage log-return target. Selection roles are shortened; full provenance is in \texttt{outputs/final/primary\_model\_inventory.csv}.}
 \label{tab:common-window-master}
 \scriptsize
 \setlength{\tabcolsep}{4pt}
@@ -8,22 +8,22 @@
 \toprule
 Rank & Model & Selection role & \(N\) & QLIKE & RMSE & MAE & Pred./Actual \\
 \midrule
-1 & AdvGARCH-BestAsymmetric & validation\_selected\_asymmetric\_garch\_comparator & 726 & 1.021413 & 3.565782 & 1.314342 & 0.933 \\
-2 & AdvGARCH-BestQLIKE & validation\_selected\_primary\_advanced\_garch & 726 & 1.022898 & 3.583987 & 1.318196 & 0.931 \\
-3 & HAR-Parkinson & validation\_selected\_har & 726 & 1.029373 & 3.621325 & 1.353338 & 0.971 \\
-4 & HAR-SquaredReturn & predeclared\_har\_comparator & 726 & 1.039364 & 3.590457 & 1.355566 & 0.993 \\
-5 & GARCH(1,1) & training\_selected\_econometric\_benchmark & 726 & 1.052888 & 3.648839 & 1.393909 & 1.024 \\
-6 & ARIMA-GARCH & training\_aic\_mean\_model\_plus\_garch\_benchmark & 726 & 1.055679 & 3.671816 & 1.400256 & 1.020 \\
-7 & ComboStack-PoolD\_AllStable & validation\_selected\_forecast\_combination & 726 & 1.113530 & 3.665685 & 1.671985 & 1.398 \\
-8 & Calibrated-Hybrid-LogTarget-Small-isotonic & validation\_selected\_calibrated\_neural & 726 & 1.118671 & 3.666914 & 1.619575 & 1.326 \\
-9 & LSTM & validation\_monitored\_neural\_baseline & 726 & 1.161001 & 3.769716 & 1.639734 & 1.294 \\
-10 & ARIMA-GARCH-LSTM & validation\_monitored\_hybrid\_neural\_baseline & 726 & 1.168609 & 3.763253 & 1.720113 & 1.404 \\
-11 & HistoricalMean & fixed\_baseline & 726 & 1.192259 & 3.799706 & 1.449153 & 0.989 \\
-12 & EWMA(lambda=0.90) & validation\_selected\_ewma & 726 & 1.219608 & 3.716363 & 1.410256 & 1.000 \\
-13 & Hybrid-QLIKE & validation\_selected\_tuned\_hybrid\_neural & 726 & 1.230508 & 3.807296 & 1.862578 & 1.549 \\
-14 & RollingVol-20 & fixed\_baseline & 726 & 1.280635 & 3.901051 & 1.462196 & 0.997 \\
-15 & RollingVol-10 & fixed\_baseline & 726 & 1.309964 & 3.974129 & 1.478891 & 1.005 \\
-16 & RollingVol-5 & fixed\_baseline & 726 & 1.928009 & 4.011383 & 1.492394 & 0.992 \\
+1 & AdvGARCH-BestAsymmetric & Asymmetric comparator & 745 & 1.029992 & 3.543267 & 1.321160 & 0.938 \\
+2 & AdvGARCH-BestQLIKE & Validation AdvGARCH & 745 & 1.032548 & 3.561391 & 1.324605 & 0.936 \\
+3 & HAR-Parkinson & Validation HAR & 745 & 1.034521 & 3.597062 & 1.358346 & 0.976 \\
+4 & HAR-SquaredReturn & HAR comparator & 745 & 1.047975 & 3.568915 & 1.364458 & 1.000 \\
+5 & GARCH(1,1) & Canonical GARCH & 745 & 1.062958 & 3.628230 & 1.407866 & 1.036 \\
+6 & ARIMA-GARCH & AIC ARIMA-GARCH & 745 & 1.065995 & 3.651122 & 1.414546 & 1.032 \\
+7 & ComboStack-PoolD\_AllStable & Validation combo & 745 & 1.114856 & 3.632614 & 1.658267 & 1.378 \\
+8 & Calibrated-Hybrid-LogTarget-Small-isotonic & Calibrated neural & 745 & 1.126931 & 3.645180 & 1.635585 & 1.340 \\
+9 & LSTM & Neural baseline & 745 & 1.163862 & 3.742718 & 1.643025 & 1.299 \\
+10 & ARIMA-GARCH-LSTM & Hybrid baseline & 745 & 1.172986 & 3.738682 & 1.726914 & 1.411 \\
+11 & HistoricalMean & Fixed baseline & 745 & 1.191049 & 3.769834 & 1.447045 & 0.990 \\
+12 & EWMA(lambda=0.90) & Validation EWMA & 745 & 1.225435 & 3.696192 & 1.429298 & 1.019 \\
+13 & Hybrid-QLIKE & Tuned hybrid & 745 & 1.231908 & 3.786362 & 1.841543 & 1.518 \\
+14 & RollingVol-20 & Fixed baseline & 745 & 1.285347 & 3.875261 & 1.476067 & 1.014 \\
+15 & RollingVol-10 & Fixed baseline & 745 & 1.324963 & 3.952645 & 1.496788 & 1.019 \\
+16 & RollingVol-5 & Fixed baseline & 745 & 1.994647 & 3.987033 & 1.504270 & 0.998 \\
 \bottomrule
 \end{tabular}
 \end{table*}

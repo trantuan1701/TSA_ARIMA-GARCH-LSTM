@@ -1,0 +1,14 @@
+log_return_pct
+squared_return
+abs_return
+rolling_vol_5
+rolling_vol_10
+rolling_vol_20
+volume
+trading_value
+garch_11_pred_var
+garch_11_pred_vol
+arima_garch_pred_var
+arima_garch_pred_vol
+arima_mean_pred
+arima_resid_proxy

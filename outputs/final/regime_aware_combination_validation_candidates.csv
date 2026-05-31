@@ -1,0 +1,4 @@
+threshold_quantile,threshold_value,low_econ_weight,high_econ_weight,validation_qlike,validation_high_count,validation_low_count
+0.75,1.6731203455249393,0.45,0.0,1.4928995163564505,188,562
+0.85,1.9932273676304215,0.4,0.0,1.4947638738696514,113,637
+0.9,2.1496139455223493,0.37,0.0,1.4959532202131631,75,675

@@ -1,0 +1,17 @@
+\begin{table*}[!t]
+\centering
+\caption{Stage 1 benchmark-completeness additions. EWMA and HAR are selected only by validation QLIKE, then evaluated on the untouched test split. HAR-Parkinson is a strong benchmark rather than a cosmetic baseline.}
+\label{tab:stage1-baselines}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}L{0.22\textwidth}L{0.22\textwidth}r r r L{0.24\textwidth}@{}}
+\toprule
+Model & Validation selection rule & Val. QLIKE & Test QLIKE & \(N_{\mathrm{test}}\) & Interpretation \\
+\midrule
+EWMA(\(\lambda=0.90\)) & Best among \(\lambda\in\{0.90,0.94,0.97,0.99\}\) & 1.687209 & 1.225435 & 745 & Industry-style RiskMetrics baseline; improves benchmark completeness but trails stronger volatility models \\
+HAR-Parkinson & Best HAR variant by validation QLIKE & \best{1.558162} & \best{1.034521} & 745 & Competitive with advanced GARCH-family forecasts on the main squared-return target \\
+HAR-SquaredReturn & Included HAR robustness variant & 1.647660 & 1.047975 & 745 & Stronger than naive rolling volatility, but not validation-selected \\
+AdvGARCH-BestQLIKE & Best advanced GARCH-family candidate by validation QLIKE & 1.611304 & 1.032548 & 745 & Primary advanced GARCH-family selected model \\
+\bottomrule
+\end{tabular}
+\end{table*}

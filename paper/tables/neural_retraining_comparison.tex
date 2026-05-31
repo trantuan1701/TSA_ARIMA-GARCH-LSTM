@@ -1,0 +1,20 @@
+\begin{table*}[!t]
+\centering
+\caption{Legacy versus corrected-context neural test results.}
+\label{tab:neural-retraining-comparison}
+\scriptsize
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+model & artifact\_version & n\_obs & qlike & rmse & mae \\
+\midrule
+ARIMA-GARCH-LSTM & corrected\_context\_v2 & 745 & 1.172986 & 3.738682 & 1.726914 \\
+ARIMA-GARCH-LSTM & legacy\_pre\_context\_fix & 726 & 1.168609 & 3.763253 & 1.720113 \\
+Hybrid-QLIKE & corrected\_context\_v2 & 745 & 1.231908 & 3.786362 & 1.841543 \\
+Hybrid-QLIKE & legacy\_pre\_context\_fix & 726 & 1.230508 & 3.807296 & 1.862578 \\
+LSTM & corrected\_context\_v2 & 745 & 1.163862 & 3.742718 & 1.643025 \\
+LSTM & legacy\_pre\_context\_fix & 726 & 1.161001 & 3.769716 & 1.639734 \\
+LSTM-QLIKE & corrected\_context\_v2 & 745 & 1.187248 & 3.754504 & 1.713801 \\
+LSTM-QLIKE & legacy\_pre\_context\_fix & 726 & 1.185876 & 3.782485 & 1.714073 \\
+\bottomrule
+\end{tabular}
+\end{table*}

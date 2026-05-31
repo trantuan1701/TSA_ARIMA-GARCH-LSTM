@@ -9,6 +9,7 @@ files, but all new artifacts are written below ``outputs/advanced``.
 from __future__ import annotations
 
 import json
+import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -25,8 +26,22 @@ except ImportError:  # pragma: no cover
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = PROJECT_ROOT / "data" / "processed"
+
+
+def optional_project_path(env_name: str) -> Path | None:
+    raw = os.environ.get(env_name)
+    if not raw:
+        return None
+    path = Path(raw)
+    return path if path.is_absolute() else PROJECT_ROOT / path
+
+
 ORIGINAL_PREDICTIONS_DIR = PROJECT_ROOT / "outputs" / "predictions"
-ADVANCED_DIR = PROJECT_ROOT / "outputs" / "advanced"
+NEURAL_OUTPUT_ROOT = optional_project_path("VNINDEX_NEURAL_OUTPUT_ROOT")
+NEURAL_PREDICTIONS_DIR = (
+    NEURAL_OUTPUT_ROOT / "predictions" if NEURAL_OUTPUT_ROOT is not None else ORIGINAL_PREDICTIONS_DIR
+)
+ADVANCED_DIR = optional_project_path("VNINDEX_ADVANCED_DIR") or PROJECT_ROOT / "outputs" / "advanced"
 ADVANCED_PREDICTIONS_DIR = ADVANCED_DIR / "predictions"
 ADVANCED_TABLES_DIR = ADVANCED_DIR / "tables"
 ADVANCED_FIGURES_DIR = ADVANCED_DIR / "figures"
@@ -38,6 +53,11 @@ SPLIT_NAMES = ("train", "validation", "test")
 EVALUATION_SPLITS = ("validation", "test")
 LOSS_TYPES = ("qlike", "squared_error", "absolute_error")
 
+
+def neural_prediction_path(*parts: str) -> Path:
+    return NEURAL_PREDICTIONS_DIR.joinpath(*parts)
+
+
 ORIGINAL_MODEL_FILES = {
     "HistoricalMean": ORIGINAL_PREDICTIONS_DIR / "pred_baseline_mean.csv",
     "RollingVol-5": ORIGINAL_PREDICTIONS_DIR / "pred_rolling_vol_5.csv",
@@ -45,16 +65,14 @@ ORIGINAL_MODEL_FILES = {
     "RollingVol-20": ORIGINAL_PREDICTIONS_DIR / "pred_rolling_vol_20.csv",
     "GARCH(1,1)": ORIGINAL_PREDICTIONS_DIR / "pred_garch_11.csv",
     "ARIMA-GARCH": ORIGINAL_PREDICTIONS_DIR / "pred_arima_garch.csv",
-    "LSTM": ORIGINAL_PREDICTIONS_DIR / "pred_lstm_base.csv",
-    "ARIMA-GARCH-LSTM": ORIGINAL_PREDICTIONS_DIR / "pred_lstm_hybrid.csv",
-    "LSTM-QLIKE": ORIGINAL_PREDICTIONS_DIR / "lstm_tuned" / "pred_lstm_qlike.csv",
-    "Hybrid-QLIKE": ORIGINAL_PREDICTIONS_DIR / "lstm_tuned" / "pred_hybrid_qlike.csv",
-    "LSTM-LogTarget": ORIGINAL_PREDICTIONS_DIR / "lstm_tuned" / "pred_lstm_logtarget.csv",
-    "LSTM-LogTarget-Small": ORIGINAL_PREDICTIONS_DIR / "lstm_tuned" / "pred_lstm_logtarget_small.csv",
-    "Hybrid-LogTarget": ORIGINAL_PREDICTIONS_DIR / "lstm_tuned" / "pred_hybrid_logtarget.csv",
-    "Hybrid-LogTarget-Small": ORIGINAL_PREDICTIONS_DIR
-    / "lstm_tuned"
-    / "pred_hybrid_logtarget_small.csv",
+    "LSTM": neural_prediction_path("pred_lstm_base.csv"),
+    "ARIMA-GARCH-LSTM": neural_prediction_path("pred_lstm_hybrid.csv"),
+    "LSTM-QLIKE": neural_prediction_path("lstm_tuned", "pred_lstm_qlike.csv"),
+    "Hybrid-QLIKE": neural_prediction_path("lstm_tuned", "pred_hybrid_qlike.csv"),
+    "LSTM-LogTarget": neural_prediction_path("lstm_tuned", "pred_lstm_logtarget.csv"),
+    "LSTM-LogTarget-Small": neural_prediction_path("lstm_tuned", "pred_lstm_logtarget_small.csv"),
+    "Hybrid-LogTarget": neural_prediction_path("lstm_tuned", "pred_hybrid_logtarget.csv"),
+    "Hybrid-LogTarget-Small": neural_prediction_path("lstm_tuned", "pred_hybrid_logtarget_small.csv"),
 }
 
 

@@ -1,6 +1,6 @@
 PYTHON ?= python
 
-.PHONY: data econometric lstm tune evaluate diagnostics statistical-tests robustness empirical-rigor advanced-model-search advanced-combinations advanced-hypothesis-tests advanced-var advanced-experiments proxy-robustness final-artifacts final-audit stage1-audit stage1-baselines stage1-risk stage1-diagnostics stage1-robustness stage1-test stage1-all paper test all clean-cache
+.PHONY: data econometric lstm tune evaluate diagnostics statistical-tests robustness empirical-rigor advanced-model-search advanced-combinations advanced-hypothesis-tests advanced-var advanced-experiments proxy-robustness neural-corrected advanced-corrected-combinations completion-artifacts artifact-manifest final-artifacts final-audit stage1-audit stage1-baselines stage1-risk stage1-diagnostics stage1-robustness stage1-test stage1-all paper test all clean-cache
 
 data:
 	$(PYTHON) src/prepare_data.py
@@ -49,8 +49,24 @@ advanced-experiments:
 proxy-robustness:
 	PYTHONDONTWRITEBYTECODE=1 python src/proxy_robustness.py
 
+neural-corrected:
+	PYTHONDONTWRITEBYTECODE=1 VNINDEX_NEURAL_OUTPUT_ROOT=outputs/neural_corrected_context_v2 VNINDEX_RANDOM_SEED=42 python src/train_lstm_hybrid.py
+	PYTHONDONTWRITEBYTECODE=1 VNINDEX_NEURAL_OUTPUT_ROOT=outputs/neural_corrected_context_v2 VNINDEX_RANDOM_SEED=42 python src/tune_lstm_hybrid.py
+
+advanced-corrected-combinations:
+	mkdir -p outputs/advanced_corrected_context_v2/predictions
+	rsync -a outputs/advanced/predictions/garch_family outputs/advanced/predictions/refit_protocols outputs/advanced_corrected_context_v2/predictions/
+	PYTHONDONTWRITEBYTECODE=1 VNINDEX_NEURAL_OUTPUT_ROOT=outputs/neural_corrected_context_v2 VNINDEX_ADVANCED_DIR=outputs/advanced_corrected_context_v2 python src/advanced_forecast_combinations.py --force
+
+completion-artifacts:
+	PYTHONDONTWRITEBYTECODE=1 python src/completion_extensions.py all
+
+artifact-manifest:
+	PYTHONDONTWRITEBYTECODE=1 python src/completion_extensions.py manifest
+
 final-artifacts:
 	PYTHONDONTWRITEBYTECODE=1 python src/final_financial_econometrics.py all
+	PYTHONDONTWRITEBYTECODE=1 python src/completion_extensions.py all
 
 final-audit:
 	PYTHONDONTWRITEBYTECODE=1 python src/final_financial_econometrics.py audit

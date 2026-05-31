@@ -1,0 +1,13 @@
+model,coefficient,value
+HAR-SquaredReturn,intercept,0.49151386414136117
+HAR-SquaredReturn,sr_d,0.04300997457162642
+HAR-SquaredReturn,sr_w,0.4312791007002945
+HAR-SquaredReturn,sr_m,0.1128369112767045
+Log-HAR-SquaredReturn,intercept,-2.045365701444879
+Log-HAR-SquaredReturn,sr_d,0.02039662683475718
+Log-HAR-SquaredReturn,sr_w,0.2667226144399862
+Log-HAR-SquaredReturn,sr_m,0.17775926246850404
+HAR-Parkinson,intercept,0.4182013716794398
+HAR-Parkinson,parkinson_d,0.3090126427509369
+HAR-Parkinson,parkinson_w,0.671756137272423
+HAR-Parkinson,parkinson_m,-0.003872663126831155

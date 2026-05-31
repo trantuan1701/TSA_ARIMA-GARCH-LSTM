@@ -1,0 +1,21 @@
+\begin{table*}[!t]
+\centering
+\caption{Distribution-specific VaR and ES for Normal GARCH-family specifications.}
+\label{tab:model-specific-var-es-garch}
+\scriptsize
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+model & alpha & n\_obs & var\_violations & expected\_violations & kupiec\_uc\_p\_value & christoffersen\_cc\_p\_value & quantile\_loss \\
+\midrule
+AdvGARCH-BestAsymmetric & 0.010 & 745 & 15 & 7.45 & 0.0145 & 0.0371 & 0.053518 \\
+AdvGARCH-BestQLIKE & 0.010 & 745 & 15 & 7.45 & 0.0145 & 0.0371 & 0.053881 \\
+GARCH(1,1) & 0.010 & 745 & 16 & 7.45 & 0.00631 & 0.0169 & 0.054979 \\
+GARCH(1,1) & 0.025 & 745 & 22 & 18.62 & 0.441 & 0.682 & 0.092134 \\
+AdvGARCH-BestAsymmetric & 0.025 & 745 & 24 & 18.62 & 0.227 & 0.467 & 0.090424 \\
+AdvGARCH-BestQLIKE & 0.025 & 745 & 24 & 18.62 & 0.227 & 0.467 & 0.090618 \\
+GARCH(1,1) & 0.050 & 745 & 35 & 37.25 & 0.703 & 0.792 & 0.140396 \\
+AdvGARCH-BestAsymmetric & 0.050 & 745 & 34 & 37.25 & 0.579 & 0.759 & 0.138450 \\
+AdvGARCH-BestQLIKE & 0.050 & 745 & 34 & 37.25 & 0.579 & 0.759 & 0.138440 \\
+\bottomrule
+\end{tabular}
+\end{table*}

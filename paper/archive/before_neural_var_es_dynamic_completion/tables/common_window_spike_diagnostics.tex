@@ -1,0 +1,20 @@
+\begin{table*}[!t]
+\centering
+\caption{Common-window spike-day diagnostics at the 90th percentile of actual variance.}
+\label{tab:common-window-spike-diagnostics}
+\scriptsize
+\begin{tabular}{@{}L{0.24\textwidth}rrrr@{}}
+\toprule
+Model & Spike days & Underpred. & Severe & Spike QLIKE \\
+\midrule
+AdvGARCH-BestAsymmetric & 73 & 97.3\% & 76.7\% & 6.713 \\
+AdvGARCH-BestQLIKE & 73 & 94.5\% & 75.3\% & 6.730 \\
+HAR-Parkinson & 73 & 93.2\% & 76.7\% & 6.337 \\
+GARCH(1,1) & 73 & 94.5\% & 72.6\% & 6.766 \\
+ARIMA-GARCH & 73 & 94.5\% & 74.0\% & 6.770 \\
+EWMA(lambda=0.90) & 73 & 93.2\% & 72.6\% & 8.425 \\
+LSTM & 73 & 100.0\% & 56.2\% & 5.099 \\
+ARIMA-GARCH-LSTM & 73 & 100.0\% & 56.2\% & 4.793 \\
+\bottomrule
+\end{tabular}
+\end{table*}

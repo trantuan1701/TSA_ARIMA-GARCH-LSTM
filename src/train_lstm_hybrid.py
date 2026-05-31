@@ -10,6 +10,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+os.environ.setdefault("PYTHONHASHSEED", str(os.environ.get("VNINDEX_RANDOM_SEED", "42")))
+os.environ.setdefault("TF_DETERMINISTIC_OPS", "1")
+os.environ.setdefault("TF_ENABLE_ONEDNN_OPTS", "0")
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 
 import matplotlib
@@ -83,12 +86,29 @@ except ImportError:  # pragma: no cover - fallback for unusual execution context
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
-PREDICTIONS_DIR = PROJECT_ROOT / "outputs" / "predictions"
-METRICS_DIR = PROJECT_ROOT / "outputs" / "metrics"
-FIGURES_DIR = PROJECT_ROOT / "outputs" / "figures"
-MODELS_DIR = PROJECT_ROOT / "outputs" / "models"
 
-SEED = 42
+
+def optional_project_path(env_name: str) -> Path | None:
+    raw = os.environ.get(env_name)
+    if not raw:
+        return None
+    path = Path(raw)
+    return path if path.is_absolute() else PROJECT_ROOT / path
+
+
+NEURAL_OUTPUT_ROOT = optional_project_path("VNINDEX_NEURAL_OUTPUT_ROOT")
+if NEURAL_OUTPUT_ROOT is None:
+    PREDICTIONS_DIR = PROJECT_ROOT / "outputs" / "predictions"
+    METRICS_DIR = PROJECT_ROOT / "outputs" / "metrics"
+    FIGURES_DIR = PROJECT_ROOT / "outputs" / "figures"
+    MODELS_DIR = PROJECT_ROOT / "outputs" / "models"
+else:
+    PREDICTIONS_DIR = NEURAL_OUTPUT_ROOT / "predictions"
+    METRICS_DIR = NEURAL_OUTPUT_ROOT / "metrics"
+    FIGURES_DIR = NEURAL_OUTPUT_ROOT / "figures"
+    MODELS_DIR = NEURAL_OUTPUT_ROOT / "models"
+
+SEED = int(os.environ.get("VNINDEX_RANDOM_SEED", "42"))
 SEQ_LEN = 20
 EPOCHS = 100
 BATCH_SIZE = 32
